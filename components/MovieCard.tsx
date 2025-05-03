@@ -76,7 +76,7 @@ const MovieCard = ({
                 ? `https://image.tmdb.org/t/p/w500${poster_path}`
                 : "https://placehold.co/600x400/1a1a1a/ffffff.png",
             }}
-            className="w-full h-52 rounded-lg"
+            className="w-full h-48 rounded-lg"
             resizeMode="cover"
             blurRadius={longPressedMovie && longPressedMovie !== id ? 10 : 0}
           />

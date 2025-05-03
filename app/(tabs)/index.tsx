@@ -70,7 +70,7 @@ export default function Index() {
                   numColumns={3}
                   columnWrapperStyle={{
                     justifyContent: "flex-start",
-                    gap: 20,
+                    gap: 10,
                     paddingRight: 5,
                     marginBottom: 10,
                   }}
