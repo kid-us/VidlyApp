@@ -1,7 +1,5 @@
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, router } from "expo-router";
-import { ImageBackground, Pressable, Text, View } from "react-native";
+import { ImageBackground, Text, View } from "react-native";
 
 interface BannerProps {
   poster_path: string;
@@ -23,7 +21,7 @@ const MovieBanner = ({
   return (
     <>
       {backdrop_path && poster_path && (
-        <Link href={`/movies/${id}`} asChild>
+        <View>
           <ImageBackground
             source={{
               uri: poster_path
@@ -51,7 +49,7 @@ const MovieBanner = ({
                   {title ? title : name}
                 </Text>
                 <Text className="text-zinc-300 mt-5">{overview}</Text>
-                <Pressable
+                {/* <Pressable
                   className="mt-5 w-full px-16 py-2 rounded-lg bg-action"
                   onPress={() => router.push(`/movies/${id}`)}
                 >
@@ -60,11 +58,11 @@ const MovieBanner = ({
                     size={20}
                     color={"#fff"}
                   />
-                </Pressable>
+                </Pressable> */}
               </View>
             </View>
           </ImageBackground>
-        </Link>
+        </View>
       )}
     </>
   );
