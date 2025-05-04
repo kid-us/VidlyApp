@@ -56,7 +56,6 @@ const MovieDetails = () => {
               </TouchableOpacity>
             </View>
 
-            {/*  */}
             <View className="flex-col items-start justify-center mt-5 px-5">
               <Text className="text-white text-2xl font-semibold">
                 {movie?.title}
@@ -95,15 +94,25 @@ const MovieDetails = () => {
 
               {/* Genre */}
               <Text className="text-gray-400">Genre</Text>
-              <View className="flex-row gap-x-2 justify-start mt-2 mb-5">
-                {movie?.genres.map((g) => (
-                  <Text
-                    key={g.id}
-                    className="bg-teal-600 text-white px-4 py-1 rounded text-sm"
-                  >
-                    {g.name}
-                  </Text>
-                ))}
+              <View className="flex-row flex-wrap w-full gap-x-2 justify-start mt-2 mb-5">
+                <FlatList
+                  data={movie?.genres}
+                  renderItem={({ item }) => (
+                    <Text className="bg-teal-600 text-white px-4 py-1 rounded text-sm">
+                      {item.name}
+                    </Text>
+                  )}
+                  keyExtractor={(item) => item.id.toString()}
+                  numColumns={3}
+                  columnWrapperStyle={{
+                    justifyContent: "flex-start",
+                    gap: 10,
+                    paddingRight: 5,
+                    marginBottom: 10,
+                  }}
+                  ItemSeparatorComponent={() => <View className="my-2" />}
+                  scrollEnabled={false}
+                />
               </View>
 
               {/* Budget and Revenue */}
@@ -167,7 +176,7 @@ const MovieDetails = () => {
               {/* Recommendation */}
               <Text className="text-action text-xl">Similar Movies</Text>
               <FlatList
-                data={similarMovies?.slice(0, 6)}
+                data={similarMovies?.slice(0, 4)}
                 renderItem={({ item }) => (
                   <MovieCard
                     {...item}

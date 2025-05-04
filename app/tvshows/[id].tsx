@@ -96,14 +96,32 @@ const TvShowsDetails = () => {
               {/* Genre */}
               <Text className="text-gray-400">Genre</Text>
               <View className="flex-row gap-x-2 justify-start mt-2 mb-5">
-                {movie?.genres.map((g) => (
+                {/* {movie?.genres.map((g) => (
                   <Text
                     key={g.id}
                     className="bg-teal-600 text-white px-4 py-1 rounded text-sm"
                   >
                     {g.name}
                   </Text>
-                ))}
+                ))} */}
+                <FlatList
+                  data={movie?.genres}
+                  renderItem={({ item }) => (
+                    <Text className="bg-teal-600 text-white px-4 py-1 rounded text-sm">
+                      {item.name}
+                    </Text>
+                  )}
+                  keyExtractor={(item) => item.id.toString()}
+                  numColumns={3}
+                  columnWrapperStyle={{
+                    justifyContent: "flex-start",
+                    gap: 10,
+                    paddingRight: 5,
+                    marginBottom: 5,
+                  }}
+                  ItemSeparatorComponent={() => <View className="my-2" />}
+                  scrollEnabled={false}
+                />
               </View>
 
               <Text className="text-zinc-300">
@@ -154,14 +172,14 @@ const TvShowsDetails = () => {
                 numColumns={3}
                 columnWrapperStyle={{
                   justifyContent: "flex-start",
-                  gap: 10,
+                  gap: 14,
                   paddingRight: 5,
                   marginBottom: 10,
                 }}
                 ItemSeparatorComponent={() => <View className="my-2" />}
                 keyExtractor={(item) => item.name}
                 scrollEnabled={false}
-                className="my-8"
+                className="my-20"
               />
 
               {/* Recommendation */}

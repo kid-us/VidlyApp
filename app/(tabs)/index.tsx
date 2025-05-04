@@ -1,4 +1,3 @@
-import logo from "@/assets/images/logo.png";
 import { default as Card } from "@/components/Card";
 import MovieBanner from "@/components/MovieBanner";
 import Upcoming from "@/components/Upcoming";
@@ -9,7 +8,6 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
-  Image,
   ScrollView,
   Text,
   View,
@@ -58,10 +56,10 @@ export default function Index() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
           >
-            <Image
+            {/* <Image
               source={logo}
               className="absolute top-0 z-50 size-14 ms-5 mt-5"
-            />
+            /> */}
             {data && (
               <Carousel
                 loop
