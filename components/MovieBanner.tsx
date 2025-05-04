@@ -31,7 +31,7 @@ const MovieBanner = ({
             resizeMode="cover"
           >
             <LinearGradient
-              colors={["rgba(0, 0, 0, 0.99)", "rgba(1, 1, 1, 0.40)"]}
+              colors={["rgba(0, 0, 0, 0.99)", "rgba(1, 1, 1, 0.30)"]}
               start={{ x: 0.5, y: 1 }}
               end={{ x: 0.5, y: 0 }}
               style={{

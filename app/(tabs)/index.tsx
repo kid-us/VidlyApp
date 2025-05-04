@@ -22,6 +22,7 @@ export default function Index() {
   const { data: movies, error } = useFetch(() =>
     fetchMovies({ request: "discover/movie?sort_by=popularity.desc" })
   );
+  
   // Banner
   const { data, loading } = useFetch(() =>
     fetchMovies({ request: "/trending/all/day" })
