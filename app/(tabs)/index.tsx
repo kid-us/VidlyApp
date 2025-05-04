@@ -16,15 +16,11 @@ import Carousel from "react-native-reanimated-carousel";
 export default function Index() {
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-  const {
-    data: movies,
-    loading,
-    error,
-  } = useFetch(() =>
+  const { data: movies, error } = useFetch(() =>
     fetchMovies({ request: "discover/movie?sort_by=popularity.desc" })
   );
 
-  const { data } = useFetch(() =>
+  const { data, loading } = useFetch(() =>
     fetchMovies({ request: "/trending/all/day" })
   );
 
@@ -37,8 +33,8 @@ export default function Index() {
         {loading ? (
           <ActivityIndicator
             size={"large"}
-            color={"#000ff"}
-            className="mt-10 self-center"
+            color={"#FFC20B"}
+            className="mt-10 self-center flex-1"
           />
         ) : error ? (
           <Text className="text-white">{error?.message}</Text>
@@ -69,7 +65,7 @@ export default function Index() {
             )}
 
             <View className="flex-1 px-5">
-              <Text className="text-xl text-white mb-5">Top Rated Movies</Text>
+              <Text className="text-xl text-action mb-5">Top Rated Movies</Text>
 
               <FlatList
                 data={movies?.slice(0, 9)}
