@@ -23,7 +23,9 @@ export default function Index() {
     data: movies,
     loading,
     error,
-  } = useFetch(() => fetchMovies({ query: "" }));
+  } = useFetch(() =>
+    fetchMovies({ request: "discover/movie?sort_by=popularity.desc" })
+  );
 
   return (
     <View className="flex-1 bg-primary">
@@ -75,7 +77,7 @@ export default function Index() {
                     marginBottom: 10,
                   }}
                   ItemSeparatorComponent={() => <View className="my-2" />}
-                  keyExtractor={(item) => item.id}
+                  keyExtractor={(item) => item.id.toFixed(1)}
                   scrollEnabled={false}
                   className="mt-2 pb-32"
                 />

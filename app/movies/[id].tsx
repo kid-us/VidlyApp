@@ -1,20 +1,24 @@
+import MovieCard from "@/components/MovieCard";
 import MovieCast from "@/components/MovieCast";
 import MovieInfo from "@/components/MovieInfo";
 import { icons } from "@/constants/icons";
-import { fetchCasts, fetchMovieDetails } from "@/services/api";
+import { fetchCasts, fetchMovieDetails, fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import { useLocalSearchParams } from "expo-router";
-import { Image, ScrollView, Text, View } from "react-native";
+import { useState } from "react";
+import { FlatList, Image, ScrollView, Text, View } from "react-native";
 
 const MovieDetails = () => {
   const { id } = useLocalSearchParams();
+  const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
 
   const { data: movie } = useFetch(() => fetchMovieDetails(id as string));
-
   const { data: cast } = useFetch(() => fetchCasts(`${id}`));
 
-  console.log("LolOOOOOOO", cast);
+  const { data: similarMovies } = useFetch(() =>
+    fetchMovies({ request: `/movie/${id}/similar` })
+  );
 
   return (
     <View className="bg-primary flex-1">
@@ -102,7 +106,7 @@ const MovieDetails = () => {
 
           {/* Production */}
           <Text className="text-zinc-400">Production Companies</Text>
-          <View className="flex-row flex-wrap gap-x-3 justify-start mt-2 mb-5">
+          <View className="flex-row flex-wrap gap-x-3 justify-start mt-2 mb-8">
             {movie?.production_companies.map((g) => (
               <Text key={g.id} className="text-zinc-500 py-1 rounded text-sm">
                 {g.name}
@@ -111,19 +115,53 @@ const MovieDetails = () => {
           </View>
 
           {/* Casts */}
-          <Text className="text-zinc-400">Casts</Text>
-          <View className="flex flex-row flex-wrap gap-10 mt-8">
-            {cast &&
-              cast.length > 0 &&
-              cast.map((cast) => (
-                <MovieCast
-                  key={cast.cast_id}
-                  characterName={cast.character}
-                  name={cast.name}
-                  image={cast.profile_path}
-                />
-              ))}
-          </View>
+          <Text className="text-zinc-400 text-xl">Casts</Text>
+          <FlatList
+            data={cast}
+            renderItem={({ item }) => (
+              <MovieCast
+                characterName={item.character}
+                image={item.profile_path}
+                name={item.name}
+              />
+            )}
+            numColumns={3}
+            columnWrapperStyle={{
+              justifyContent: "flex-start",
+              gap: 10,
+              paddingRight: 5,
+              marginBottom: 10,
+            }}
+            ItemSeparatorComponent={() => <View className="my-2" />}
+            keyExtractor={(item) => item.cast_id.toString()}
+            scrollEnabled={false}
+            className="my-8"
+          />
+
+          {/* Recommendation */}
+          <Text className="text-zinc-400 text-xl">Similar Movies</Text>
+          <FlatList
+            data={similarMovies?.slice(0, 6)}
+            renderItem={({ item }) => (
+              <MovieCard
+                {...item}
+                longPressedMovie={longPressedMovie}
+                setLongPressedMovie={setLongPressedMovie}
+                containerWidth="w-1/2"
+              />
+            )}
+            numColumns={2}
+            columnWrapperStyle={{
+              justifyContent: "flex-start",
+              gap: 10,
+              paddingRight: 5,
+              marginBottom: 10,
+            }}
+            ItemSeparatorComponent={() => <View className="my-2" />}
+            keyExtractor={(item) => item.id.toFixed(1)}
+            scrollEnabled={false}
+            className="mt-6"
+          />
         </View>
       </ScrollView>
     </View>

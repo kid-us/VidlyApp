@@ -9,7 +9,7 @@ interface CastProps {
 
 const MovieCast = ({ name, characterName, image }: CastProps) => {
   return (
-    <View>
+    <View className="w-1/3">
       <Image
         source={
           image ? { uri: `https://image.tmdb.org/t/p/w500/${image}` } : avatar

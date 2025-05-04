@@ -14,6 +14,7 @@ interface MovieCardProps {
   genre_ids: number[];
   longPressedMovie: number | null;
   setLongPressedMovie: (id: number | null) => void;
+  containerWidth?: string;
 }
 
 const MovieCard = ({
@@ -26,6 +27,7 @@ const MovieCard = ({
   genre_ids,
   longPressedMovie,
   setLongPressedMovie,
+  containerWidth,
 }: MovieCardProps) => {
   // Getting genre name
   const genreName = (genre: number) => {
@@ -44,11 +46,13 @@ const MovieCard = ({
           <View className="flex-row gap-x-1 my-2">
             <Image source={icons.star} className="size-6" />
             <Text className="text-white text-lg font-bold">
-              {Math.round(vote_average / 2)}
+              {Math.round(vote_average ?? 0)}/10
             </Text>
           </View>
 
-          <Text className="text-zinc-500 text-xs mb-2">{release_date}</Text>
+          <Text className="text-zinc-500 text-xs mb-2">
+            {release_date.split("-")[0]}
+          </Text>
 
           {/* Genres */}
           <View className="flex-row gap-x-3 mb-5">
@@ -66,7 +70,7 @@ const MovieCard = ({
       {/* Movie Cards */}
       <Link href={`/movies/${id}`} asChild>
         <TouchableOpacity
-          className="w-[30%]"
+          className={containerWidth ? containerWidth : "w-1/3"}
           onLongPress={() => setLongPressedMovie(id)}
           onPressOut={() => setLongPressedMovie(null)}
         >
@@ -76,7 +80,7 @@ const MovieCard = ({
                 ? `https://image.tmdb.org/t/p/w500${poster_path}`
                 : "https://placehold.co/600x400/1a1a1a/ffffff.png",
             }}
-            className="w-full h-48 rounded-lg"
+            className="w-full h-52 rounded-lg"
             resizeMode="cover"
             blurRadius={longPressedMovie && longPressedMovie !== id ? 10 : 0}
           />
