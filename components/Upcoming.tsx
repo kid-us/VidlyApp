@@ -2,13 +2,14 @@ import { Link } from "expo-router";
 import { Image, Text, TouchableOpacity } from "react-native";
 
 interface Upcoming {
+  name?: string;
   id: number | string;
   title: string;
   poster: string;
   backdrop_path: string;
 }
 
-const Upcoming = ({ id, title, poster, backdrop_path }: Upcoming) => {
+const Upcoming = ({ id, title, name, poster, backdrop_path }: Upcoming) => {
   return (
     <Link href={`/movies/${id}`} asChild>
       <TouchableOpacity className="w-32 relative">
@@ -23,7 +24,7 @@ const Upcoming = ({ id, title, poster, backdrop_path }: Upcoming) => {
         />
 
         <Text className="text-sm mt-2 text-light-200" numberOfLines={1}>
-          {title}
+          {title ? title : name}
         </Text>
       </TouchableOpacity>
     </Link>

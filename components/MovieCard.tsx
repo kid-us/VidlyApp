@@ -5,6 +5,9 @@ import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 interface MovieCardProps {
+  first_air_date?: string;
+  name: string;
+  type?: string;
   id: number;
   title: string;
   poster_path: string;
@@ -18,6 +21,9 @@ interface MovieCardProps {
 }
 
 const MovieCard = ({
+  first_air_date,
+  name,
+  type,
   id,
   title,
   poster_path,
@@ -94,13 +100,19 @@ const MovieCard = ({
               }  text-sm`}
               numberOfLines={1}
             >
-              {title}
+              {title ? title : name}
             </Text>
           </View>
 
-          <Text className={`text-xs text-zinc-600 mt-1`}>
-            {release_date?.split("-")[0]}
-          </Text>
+          {type === "tv" ? (
+            <Text className={`text-xs text-zinc-600 mt-1`}>
+              {first_air_date?.split("-")[0]}
+            </Text>
+          ) : (
+            <Text className={`text-xs text-zinc-600 mt-1`}>
+              {release_date?.split("-")[0]}
+            </Text>
+          )}
         </TouchableOpacity>
       </Link>
     </>

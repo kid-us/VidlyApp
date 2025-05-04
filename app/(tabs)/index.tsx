@@ -42,6 +42,8 @@ export default function Index() {
     fetchMovies({ request: "/tv/top_rated" })
   );
 
+  console.log(tvShows);
+
   return (
     <>
       {loading ? (
@@ -153,6 +155,7 @@ export default function Index() {
                 renderItem={({ item }) => (
                   <Upcoming
                     id={item.id}
+                    name={item.name}
                     title={item.title}
                     poster={item.poster_path}
                     backdrop_path={item.backdrop_path}
@@ -174,6 +177,7 @@ export default function Index() {
                     data={tvShows?.slice(0, 9)}
                     renderItem={({ item }) => (
                       <MovieCard
+                        type="tv"
                         {...item}
                         longPressedMovie={longPressedMovie}
                         setLongPressedMovie={setLongPressedMovie}
