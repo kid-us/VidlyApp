@@ -40,7 +40,7 @@ const Search = () => {
         renderItem={({ item }) => (
           <Card
             {...item}
-            type="movie"
+            type={item.media_type}
             longPressedMovie={longPressedMovie}
             setLongPressedMovie={setLongPressedMovie}
           />
