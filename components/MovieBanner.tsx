@@ -31,7 +31,7 @@ const MovieBanner = ({
             resizeMode="cover"
           >
             <LinearGradient
-              colors={["rgba(0, 0, 0, 0.99)", "rgba(1, 1, 1, 0.50)"]}
+              colors={["rgba(0, 0, 0, 0.99)", "rgba(1, 1, 1, 0.40)"]}
               start={{ x: 0.5, y: 1 }}
               end={{ x: 0.5, y: 0 }}
               style={{
@@ -44,7 +44,7 @@ const MovieBanner = ({
             />
             {/* Add any other overlay content here */}
             <View className="flex justify-center items-start h-full px-5">
-              <View className="mt-44">
+              <View className="mt-64">
                 <Text className="text-white text-3xl font-bold">
                   {title ? title : name}
                 </Text>
