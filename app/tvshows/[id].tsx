@@ -68,18 +68,11 @@ const TvShowsDetails = () => {
               <Text className="text-zinc-400 mt-1">"{movie?.tagline}"</Text>
 
               {/* Release date and Runtime */}
-              <View className="flex-row items-center gap-x-10 mt-5">
-                <View className="flex-row gap-x-3">
-                  <FontAwesome name="calendar" size={18} color="#777" />
-                  <Text className="text-zinc-400">
-                    {movie?.first_air_date.split("-")[0]}
-                  </Text>
-                </View>
-
-                <View className="flex-row gap-x-3">
-                  <FontAwesome name="clock" size={18} color={"#777"} />
-                  {/* <Text className="text-zinc-400">{movie?.runtime}</Text> */}
-                </View>
+              <View className="flex-row gap-x-3 mt-5">
+                <FontAwesome name="calendar" size={18} color="#777" />
+                <Text className="text-zinc-400">
+                  {movie?.first_air_date.split("-")[0]}
+                </Text>
               </View>
 
               {/* Rate and popularity with vote */}

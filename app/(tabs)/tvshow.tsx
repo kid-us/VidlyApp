@@ -15,9 +15,7 @@ import Carousel from "react-native-reanimated-carousel";
 
 const TvShow = () => {
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
 
   // Banner
   const { data, loading } = useFetch(() =>
