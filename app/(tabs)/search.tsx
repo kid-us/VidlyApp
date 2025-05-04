@@ -1,4 +1,4 @@
-import MovieCard from "@/components/Card";
+import Card from "@/components/Card";
 import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
@@ -38,8 +38,9 @@ const Search = () => {
       <FlatList
         data={movies}
         renderItem={({ item }) => (
-          <MovieCard
+          <Card
             {...item}
+            type="movie"
             longPressedMovie={longPressedMovie}
             setLongPressedMovie={setLongPressedMovie}
           />
@@ -52,7 +53,7 @@ const Search = () => {
           marginBottom: 10,
         }}
         ItemSeparatorComponent={() => <View className="my-2" />}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={
           <>
             <View className="flex-row w-full justify-center items-center mt-20">
@@ -81,12 +82,16 @@ const Search = () => {
               </Text>
             )}
 
-            {!loading && !error && searchQuery.trim() && movies?.length > 0 && (
-              <Text className="text-lg text-white mb-5">
-                Search Result for :{" "}
-                <Text className="text-accent">{searchQuery}</Text>
-              </Text>
-            )}
+            {movies &&
+              !loading &&
+              !error &&
+              searchQuery.trim() &&
+              movies?.length > 0 && (
+                <Text className="text-lg text-white mb-5">
+                  Search Result for :{" "}
+                  <Text className="text-accent">{searchQuery}</Text>
+                </Text>
+              )}
           </>
         }
         ListEmptyComponent={
