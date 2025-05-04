@@ -1,3 +1,4 @@
+import logo from "@/assets/images/logo.png";
 import { default as Card } from "@/components/Card";
 import MovieBanner from "@/components/MovieBanner";
 import Upcoming from "@/components/Upcoming";
@@ -8,6 +9,7 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  Image,
   ScrollView,
   Text,
   View,
@@ -42,8 +44,6 @@ export default function Index() {
     fetchMovies({ request: "/tv/top_rated" })
   );
 
-  console.log(tvShows);
-
   return (
     <>
       {loading ? (
@@ -58,12 +58,16 @@ export default function Index() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
           >
+            <Image
+              source={logo}
+              className="absolute top-0 z-50 size-14 ms-5 mt-5"
+            />
             {data && (
               <Carousel
                 loop
                 autoPlay
                 width={screenWidth}
-                height={screenHeight / 1.5}
+                height={screenHeight / 1.7}
                 snapEnabled={true}
                 data={data}
                 autoPlayInterval={10000}
@@ -87,6 +91,7 @@ export default function Index() {
               <Text className="text-lg font-semibold text-action mb-4">
                 Upcoming Movies
               </Text>
+
               <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -98,6 +103,7 @@ export default function Index() {
                 renderItem={({ item }) => (
                   <Upcoming
                     id={item.id}
+                    type="movie"
                     title={item.title}
                     poster={item.poster_path}
                     backdrop_path={item.backdrop_path}
@@ -120,8 +126,8 @@ export default function Index() {
                     data={movies?.slice(0, 9)}
                     renderItem={({ item }) => (
                       <Card
-                        type="movie"
                         {...item}
+                        type="movie"
                         longPressedMovie={longPressedMovie}
                         setLongPressedMovie={setLongPressedMovie}
                       />
@@ -156,6 +162,7 @@ export default function Index() {
                 renderItem={({ item }) => (
                   <Upcoming
                     id={item.id}
+                    type="tv"
                     name={item.name}
                     title={item.title}
                     poster={item.poster_path}

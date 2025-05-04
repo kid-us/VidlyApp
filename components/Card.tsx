@@ -89,7 +89,7 @@ const Card = ({
                 ? `https://image.tmdb.org/t/p/w500${poster_path}`
                 : "https://placehold.co/600x400/1a1a1a/ffffff.png",
             }}
-            className={`${containerWidth ? "h-72" : "h-53"} w-full rounded-lg`}
+            className={`${containerWidth ? "h-72" : "h-52"} w-full rounded-lg`}
             resizeMode="cover"
             blurRadius={longPressedMovie && longPressedMovie !== id ? 10 : 0}
           />
