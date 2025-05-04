@@ -1,25 +1,21 @@
-import { icons } from "@/constants/icons";
-import { images } from "@/constants/images";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
 import React from "react";
-import { Image, ImageBackground, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 const TabIcon = ({ focused, title, icon }: any) => {
   if (focused) {
     return (
-      <ImageBackground
-        source={images.highlight}
-        className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden"
-      >
-        <Image source={icon} tintColor={"#151312"} className="size-5" />
-        <Text className="text-secondary text-base font-bold ml-2">{title}</Text>
-      </ImageBackground>
+      <View className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden bg-action">
+        <MaterialIcons name={icon} size={21} color={"#000"} />
+        <Text className="text-secondary font-bold ml-2 text-sm">{title}</Text>
+      </View>
     );
   }
 
   return (
     <View className="size-full justify-center items-center mt-4 rounded-full">
-      <Image source={icon} tintColor={"#A8B5DB"} className="size-5" />
+      <MaterialIcons name={icon} size={21} color={"#A8B5DB"} />
     </View>
   );
 };
@@ -36,11 +32,11 @@ const _layout = () => {
           alignItems: "center",
         },
         tabBarStyle: {
-          backgroundColor: "#0f0D23",
+          backgroundColor: "#18181b",
           borderRadius: 50,
           marginHorizontal: 20,
           marginBottom: 36,
-          height: 52,
+          height: 50,
           position: "absolute",
           overflow: "hidden",
           borderWidth: 1,
@@ -54,29 +50,29 @@ const _layout = () => {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Home" icon={icons.home} />
+            <TabIcon focused={focused} title="Home" icon={"home"} />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="saved"
+        name="movie"
         options={{
-          title: "Saved",
+          title: "Movies",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Saved" icon={icons.save} />
+            <TabIcon focused={focused} title="Movies" icon={"movie-filter"} />
           ),
         }}
       />
-      
+
       <Tabs.Screen
-        name="profile"
+        name="tvshow"
         options={{
-          title: "Profile",
+          title: "Tv Shows",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Profile" icon={icons.person} />
+            <TabIcon focused={focused} title="Tv Shows" icon={"live-tv"} />
           ),
         }}
       />
@@ -87,7 +83,7 @@ const _layout = () => {
           title: "Search",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Search" icon={icons.search} />
+            <TabIcon focused={focused} title="Search" icon={"search"} />
           ),
         }}
       />

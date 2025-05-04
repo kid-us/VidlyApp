@@ -1,11 +1,11 @@
 import { Text, View } from "react-native";
 
-const Saved = () => {
+const Movie = () => {
   return (
     <View>
-      <Text>Saved</Text>
+      <Text>Movie</Text>
     </View>
   );
 };
 
-export default Saved;
+export default Movie;

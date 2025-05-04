@@ -48,7 +48,7 @@ const MovieBanner = ({
                 <Text className="text-white text-3xl font-bold">
                   {title ? title : name}
                 </Text>
-                <Text className="text-zinc-300 mt-5" numberOfLines={5}>
+                <Text className="text-zinc-400 mt-5" numberOfLines={5}>
                   {overview}
                 </Text>
                 {/* <Pressable

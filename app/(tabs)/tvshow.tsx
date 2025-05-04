@@ -1,11 +1,11 @@
 import { Text, View } from "react-native";
 
-const Profile = () => {
+const TvShow = () => {
   return (
     <View>
-      <Text>Profile</Text>
+      <Text>TvShow</Text>
     </View>
   );
 };
 
-export default Profile;
+export default TvShow;
