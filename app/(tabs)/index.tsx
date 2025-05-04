@@ -1,24 +1,21 @@
+import MovieBanner from "@/components/MovieBanner";
 import MovieCard from "@/components/MovieCard";
-import SearchBar from "@/components/SearchBar";
-import { icons } from "@/constants/icons";
-import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import { useRouter } from "expo-router";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   ActivityIndicator,
+  Dimensions,
   FlatList,
-  Image,
   ScrollView,
   Text,
   View,
 } from "react-native";
+import Carousel from "react-native-reanimated-carousel";
 
 export default function Index() {
-  const router = useRouter();
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
-
+  const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
   const {
     data: movies,
     loading,
@@ -27,17 +24,16 @@ export default function Index() {
     fetchMovies({ request: "discover/movie?sort_by=popularity.desc" })
   );
 
+  const { data } = useFetch(() =>
+    fetchMovies({ request: "/trending/all/day" })
+  );
+
   return (
     <View className="flex-1 bg-primary">
-      <Image source={images.bg} className="absolute w-full z-0" />
-
       <ScrollView
-        className="flex-1 px-5"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
       >
-        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
-
         {loading ? (
           <ActivityIndicator
             size={"large"}
@@ -47,43 +43,57 @@ export default function Index() {
         ) : error ? (
           <Text className="text-white">{error?.message}</Text>
         ) : (
-          <View>
-            {/* Search Bar */}
-            <View>
-              <SearchBar
-                onPress={() => router.push("/search")}
-                placeholder="Search for a movie"
+          <>
+            {data && (
+              <Carousel
+                loop
+                autoPlay
+                width={screenWidth}
+                height={screenHeight / 1.5}
+                snapEnabled={true}
+                data={data}
+                autoPlayInterval={10000}
+                style={{ width: "100%" }}
+                renderItem={({ item }) => (
+                  <MovieBanner
+                    key={item.id}
+                    overview={item.overview}
+                    poster_path={item.poster_path}
+                    id={item.id}
+                    title={item.title}
+                    backdrop_path={item.backdrop_path}
+                    name={item.name}
+                  />
+                )}
               />
+            )}
 
-              <>
-                <Text className="text-2xl text-white my-5">
-                  Top Rated Movies
-                </Text>
+            <View className="flex-1 px-5">
+              <Text className="text-xl text-white mb-5">Top Rated Movies</Text>
 
-                <FlatList
-                  data={movies}
-                  renderItem={({ item }) => (
-                    <MovieCard
-                      {...item}
-                      longPressedMovie={longPressedMovie}
-                      setLongPressedMovie={setLongPressedMovie}
-                    />
-                  )}
-                  numColumns={3}
-                  columnWrapperStyle={{
-                    justifyContent: "flex-start",
-                    gap: 10,
-                    paddingRight: 5,
-                    marginBottom: 10,
-                  }}
-                  ItemSeparatorComponent={() => <View className="my-2" />}
-                  keyExtractor={(item) => item.id.toFixed(1)}
-                  scrollEnabled={false}
-                  className="mt-2 pb-32"
-                />
-              </>
+              <FlatList
+                data={movies?.slice(0, 9)}
+                renderItem={({ item }) => (
+                  <MovieCard
+                    {...item}
+                    longPressedMovie={longPressedMovie}
+                    setLongPressedMovie={setLongPressedMovie}
+                  />
+                )}
+                numColumns={3}
+                columnWrapperStyle={{
+                  justifyContent: "flex-start",
+                  gap: 10,
+                  paddingRight: 5,
+                  marginBottom: 10,
+                }}
+                ItemSeparatorComponent={() => <View className="my-2" />}
+                keyExtractor={(item) => item.id.toFixed(1)}
+                scrollEnabled={false}
+                className="mt-2 pb-32"
+              />
             </View>
-          </View>
+          </>
         )}
       </ScrollView>
     </View>
