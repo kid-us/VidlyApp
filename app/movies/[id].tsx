@@ -1,4 +1,5 @@
 import playBtn from "@/assets/images/play.png";
+import BackButton from "@/components/BackButton";
 import MovieCard from "@/components/Card";
 import MovieCast from "@/components/MovieCast";
 import MovieInfo from "@/components/MovieInfo";
@@ -41,6 +42,9 @@ const MovieDetails = () => {
         />
       ) : (
         <View className="bg-primary flex-1">
+          {/* Back Button */}
+          <BackButton />
+          
           <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
             <View className="relative">
               <Image

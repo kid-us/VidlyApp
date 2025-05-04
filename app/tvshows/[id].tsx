@@ -1,4 +1,5 @@
 import playBtn from "@/assets/images/play.png";
+import BackButton from "@/components/BackButton";
 import Card from "@/components/Card";
 import MovieCast from "@/components/MovieCast";
 import MovieInfo from "@/components/MovieInfo";
@@ -41,6 +42,9 @@ const TvShowsDetails = () => {
         />
       ) : (
         <View className="bg-primary flex-1">
+          {/* Back Button */}
+          <BackButton />
+
           <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
             <View className="relative">
               <Image
@@ -96,14 +100,6 @@ const TvShowsDetails = () => {
               {/* Genre */}
               <Text className="text-gray-400">Genre</Text>
               <View className="flex-row gap-x-2 justify-start mt-2 mb-5">
-                {/* {movie?.genres.map((g) => (
-                  <Text
-                    key={g.id}
-                    className="bg-teal-600 text-white px-4 py-1 rounded text-sm"
-                  >
-                    {g.name}
-                  </Text>
-                ))} */}
                 <FlatList
                   data={movie?.genres}
                   renderItem={({ item }) => (
@@ -182,7 +178,7 @@ const TvShowsDetails = () => {
                 className="my-20"
               />
 
-              {/* Recommendation */}
+              {/* Similar Movies */}
               <Text className="text-action text-xl">Similar Movies</Text>
               <FlatList
                 data={similarMovies?.slice(0, 4)}
