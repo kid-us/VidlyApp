@@ -1,4 +1,4 @@
-import MovieCard from "@/components/MovieCard";
+import MovieCard from "@/components/Card";
 import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";

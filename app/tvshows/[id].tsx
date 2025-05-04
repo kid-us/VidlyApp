@@ -1,9 +1,9 @@
 import playBtn from "@/assets/images/play.png";
-import MovieCard from "@/components/Card";
+import Card from "@/components/Card";
 import MovieCast from "@/components/MovieCast";
 import MovieInfo from "@/components/MovieInfo";
 import { icons } from "@/constants/icons";
-import { fetchCasts, fetchMovieDetails, fetchMovies } from "@/services/api";
+import { fetchCasts, fetchMovies, fetchTvShowsDetails } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import { useLocalSearchParams } from "expo-router";
@@ -18,17 +18,17 @@ import {
   View,
 } from "react-native";
 
-const MovieDetails = () => {
+const TvShowsDetails = () => {
   const { id } = useLocalSearchParams();
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
 
   const { data: movie, loading } = useFetch(() =>
-    fetchMovieDetails(id as string)
+    fetchTvShowsDetails(id as string)
   );
-  const { data: cast } = useFetch(() => fetchCasts(`${id}`, "movie"));
+  const { data: cast } = useFetch(() => fetchCasts(`${id}`, "tv"));
 
   const { data: similarMovies } = useFetch(() =>
-    fetchMovies({ request: `/movie/${id}/similar` })
+    fetchMovies({ request: `/tv/${id}/similar` })
   );
 
   return (
@@ -59,7 +59,7 @@ const MovieDetails = () => {
             {/*  */}
             <View className="flex-col items-start justify-center mt-5 px-5">
               <Text className="text-white text-2xl font-semibold">
-                {movie?.title}
+                {movie?.name}
               </Text>
               <Text className="text-zinc-400 mt-1">"{movie?.tagline}"</Text>
 
@@ -68,13 +68,13 @@ const MovieDetails = () => {
                 <View className="flex-row gap-x-3">
                   <FontAwesome name="calendar" size={18} color="#777" />
                   <Text className="text-zinc-400">
-                    {movie?.release_date.split("-")[0]}
+                    {movie?.first_air_date.split("-")[0]}
                   </Text>
                 </View>
 
                 <View className="flex-row gap-x-3">
                   <FontAwesome name="clock" size={18} color={"#777"} />
-                  <Text className="text-zinc-400">{movie?.runtime}</Text>
+                  {/* <Text className="text-zinc-400">{movie?.runtime}</Text> */}
                 </View>
               </View>
 
@@ -106,22 +106,22 @@ const MovieDetails = () => {
                 ))}
               </View>
 
+              <Text className="text-zinc-300">
+                Status :<Text className="text-zinc-500"> {movie?.status}</Text>
+              </Text>
+
               {/* Budget and Revenue */}
               <View className="flex flex-row gap-x-16">
                 {movie && (
                   <>
                     <MovieInfo
-                      label="Budget"
-                      value={`$${(
-                        Math.round(movie?.budget) / 1_000_000
-                      ).toFixed(1)} M`}
+                      label="Season"
+                      value={movie?.number_of_seasons}
                     />
 
                     <MovieInfo
-                      label="Revenue"
-                      value={`$${(
-                        Math.round(movie?.revenue) / 1_000_000
-                      ).toFixed(1)} M`}
+                      label="Episodes"
+                      value={movie?.number_of_episodes}
                     />
                   </>
                 )}
@@ -133,7 +133,7 @@ const MovieDetails = () => {
                 {movie?.production_companies.map((g) => (
                   <Text
                     key={g.id}
-                    className="text-zinc-500 py-1 rounded text-sm"
+                    className="text-zinc-400 py-1 rounded text-sm"
                   >
                     {g.name}
                   </Text>
@@ -159,7 +159,7 @@ const MovieDetails = () => {
                   marginBottom: 10,
                 }}
                 ItemSeparatorComponent={() => <View className="my-2" />}
-                keyExtractor={(item) => item.cast_id.toString()}
+                keyExtractor={(item) => item.name}
                 scrollEnabled={false}
                 className="my-8"
               />
@@ -167,11 +167,11 @@ const MovieDetails = () => {
               {/* Recommendation */}
               <Text className="text-action text-xl">Similar Movies</Text>
               <FlatList
-                data={similarMovies?.slice(0, 6)}
+                data={similarMovies?.slice(0, 4)}
                 renderItem={({ item }) => (
-                  <MovieCard
+                  <Card
                     {...item}
-                    type="movie"
+                    type="tv"
                     longPressedMovie={longPressedMovie}
                     setLongPressedMovie={setLongPressedMovie}
                     containerWidth="w-1/2"
@@ -197,4 +197,4 @@ const MovieDetails = () => {
   );
 };
 
-export default MovieDetails;
+export default TvShowsDetails;

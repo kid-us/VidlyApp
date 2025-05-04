@@ -16,7 +16,7 @@ const MovieCast = ({ name, characterName, image }: CastProps) => {
         }
         style={{ width: 80, height: 80, borderRadius: 40 }}
       />
-      <Text className="text-sm text-zinc-300 mt-2">{name}</Text>
+      <Text className="text-sm text-zinc-200 mt-2">{name}</Text>
       <Text className="text-xs text-zinc-400">As "{characterName}"</Text>
     </View>
   );

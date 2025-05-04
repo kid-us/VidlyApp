@@ -1,5 +1,5 @@
+import { default as Card } from "@/components/Card";
 import MovieBanner from "@/components/MovieBanner";
-import MovieCard from "@/components/MovieCard";
 import Upcoming from "@/components/Upcoming";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
@@ -119,7 +119,8 @@ export default function Index() {
                   <FlatList
                     data={movies?.slice(0, 9)}
                     renderItem={({ item }) => (
-                      <MovieCard
+                      <Card
+                        type="movie"
                         {...item}
                         longPressedMovie={longPressedMovie}
                         setLongPressedMovie={setLongPressedMovie}
@@ -176,7 +177,7 @@ export default function Index() {
                   <FlatList
                     data={tvShows?.slice(0, 9)}
                     renderItem={({ item }) => (
-                      <MovieCard
+                      <Card
                         type="tv"
                         {...item}
                         longPressedMovie={longPressedMovie}

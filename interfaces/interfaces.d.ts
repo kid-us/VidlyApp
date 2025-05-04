@@ -25,6 +25,7 @@ interface TrendingMovie {
 }
 
 interface MovieDetails {
+  first_air_date?: string;
   adult: boolean;
   backdrop_path: string | null;
   belongs_to_collection: {
@@ -68,6 +69,37 @@ interface MovieDetails {
   tagline: string | null;
   title: string;
   video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+interface TvShowsDetails {
+  adult: boolean;
+  backdrop_path: string;
+  first_air_date: string;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  id: number;
+  in_production: boolean;
+  last_air_date: string;
+  name: string;
+  next_episode_to_air: null;
+  number_of_episodes: number;
+  number_of_seasons: number;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: {
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+  }[];
+  status: string;
+  tagline: string;
   vote_average: number;
   vote_count: number;
 }
