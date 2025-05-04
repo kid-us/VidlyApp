@@ -1,5 +1,5 @@
-import { icons } from "@/constants/icons";
-import { Image, TextInput, View } from "react-native";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { TextInput, View } from "react-native";
 
 interface Props {
   placeholder: string;
@@ -10,13 +10,8 @@ interface Props {
 
 const SearchBar = ({ onPress, placeholder, value, onChangeText }: Props) => {
   return (
-    <View className="flex-row items-center bg-dark-200 rounded-full px-5 py-4">
-      <Image
-        source={icons.search}
-        className="size-5"
-        resizeMode="contain"
-        tintColor={"#ab8bff"}
-      />
+    <View className="flex-row items-center bg-zinc-700 rounded px-5 py-2 mt-5">
+      <FontAwesome5 name="search" color="#a8b5db" size={20} />
 
       <TextInput
         onFocus={onPress} // Changed from onPress to onFocus

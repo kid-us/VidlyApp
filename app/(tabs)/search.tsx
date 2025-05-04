@@ -1,7 +1,6 @@
+import logo from "@/assets/images/logo_new.png";
 import Card from "@/components/Card";
 import SearchBar from "@/components/SearchBar";
-import { icons } from "@/constants/icons";
-import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { useEffect, useState } from "react";
@@ -33,7 +32,7 @@ const Search = () => {
 
   return (
     <View className="flex-1 bg-primary">
-      <Image source={images.bg} className="absolute w-full z-0" />
+      {/* <Image source={images.bg} className="absolute w-full z-0" /> */}
 
       <FlatList
         data={movies}
@@ -57,7 +56,11 @@ const Search = () => {
         ListHeaderComponent={
           <>
             <View className="flex-row w-full justify-center items-center mt-20">
-              <Image source={icons.logo} className="w-12 h-10" />
+              <Image
+                source={logo}
+                className="w-full h-12"
+                resizeMode="contain"
+              />
             </View>
 
             <View className="my-5">
@@ -71,7 +74,7 @@ const Search = () => {
             {loading && (
               <ActivityIndicator
                 size={"large"}
-                color={"#000ff"}
+                color={"#FFC20B"}
                 className="my-5 self-center"
               />
             )}
@@ -87,18 +90,22 @@ const Search = () => {
               !error &&
               searchQuery.trim() &&
               movies?.length > 0 && (
-                <Text className="text-lg text-white mb-5">
+                <Text className="text-xl text-white mb-5">
                   Search Result for :{" "}
-                  <Text className="text-accent">{searchQuery}</Text>
+                  <Text className="text-action font-semibold">
+                    {searchQuery}
+                  </Text>
                 </Text>
               )}
           </>
         }
         ListEmptyComponent={
           !loading && !error ? (
-            <View className="mt-10 justify-center items-center">
-              <Text className="text-center text-gray-500">
-                {searchQuery.trim() ? "Movie not found" : "Search for a movie"}
+            <View className="mt-7 justify-center items-center">
+              <Text className="text-center text-gray-400 text-lg">
+                {searchQuery.trim()
+                  ? "Movie not found"
+                  : "Search for a Movie or Tv Show"}
               </Text>
             </View>
           ) : null

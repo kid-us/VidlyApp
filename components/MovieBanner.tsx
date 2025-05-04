@@ -48,7 +48,9 @@ const MovieBanner = ({
                 <Text className="text-white text-3xl font-bold">
                   {title ? title : name}
                 </Text>
-                <Text className="text-zinc-300 mt-5">{overview}</Text>
+                <Text className="text-zinc-300 mt-5" numberOfLines={5}>
+                  {overview}
+                </Text>
                 {/* <Pressable
                   className="mt-5 w-full px-16 py-2 rounded-lg bg-action"
                   onPress={() => router.push(`/movies/${id}`)}
