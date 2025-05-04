@@ -1,3 +1,4 @@
+import playBtn from "@/assets/images/play.png";
 import MovieCard from "@/components/MovieCard";
 import MovieCast from "@/components/MovieCast";
 import MovieInfo from "@/components/MovieInfo";
@@ -6,8 +7,15 @@ import { fetchCasts, fetchMovieDetails, fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
-import { FlatList, Image, ScrollView, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const MovieDetails = () => {
   const { id } = useLocalSearchParams();
@@ -23,7 +31,7 @@ const MovieDetails = () => {
   return (
     <View className="bg-primary flex-1">
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
-        <View>
+        <View className="relative">
           <Image
             source={{
               uri: `https://image.tmdb.org/t/p/w500${movie?.poster_path}`,
@@ -31,7 +39,17 @@ const MovieDetails = () => {
             className="w-full h-[500px]"
             resizeMode="cover"
           />
+          {/* Trailer Button */}
+          <TouchableOpacity className="absolute -bottom-7 right-5 z-50">
+            <Image source={playBtn} className="size-14" />
+          </TouchableOpacity>
         </View>
+
+        {/* <Modal>
+          <View>
+            <YoutubePlayer height={300} videoId={"iee2TATGMyI"} />
+          </View>
+        </Modal> */}
 
         {/*  */}
         <View className="flex-col items-start justify-center mt-5 px-5">

@@ -98,13 +98,9 @@ const MovieCard = ({
             </Text>
           </View>
 
-          <View className="flex-row justify-between">
-            <Text className={`text-xs text-zinc-600 mt-1`}>Movie</Text>
-
-            <Text className={`text-xs text-zinc-600 mt-1`}>
-              {release_date?.split("-")[0]}
-            </Text>
-          </View>
+          <Text className={`text-xs text-zinc-600 mt-1`}>
+            {release_date?.split("-")[0]}
+          </Text>
         </TouchableOpacity>
       </Link>
     </>
