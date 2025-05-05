@@ -7,6 +7,7 @@ export const TMDB_CONFIG = {
   },
 };
 
+// Fetch Movies
 export const fetchMovies = async ({
   query,
   request,
@@ -57,6 +58,7 @@ export const fetchMovieDetails = async (
   }
 };
 
+// TvShows Details
 export const fetchTvShowsDetails = async (
   movieId: string
 ): Promise<TvShowsDetails> => {
@@ -103,6 +105,33 @@ export const fetchCasts = async (
     return data.cast.slice(0, 6);
   } catch (err) {
     console.log(err);
+    throw err;
+  }
+};
+
+// Fetching Trailers
+export const fetchTrailers = async (endpoint: string): Promise<Trailer[]> => {
+  try {
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/${endpoint}?api_key=${TMDB_CONFIG.API_KEY}`,
+      {
+        method: "GET",
+        headers: TMDB_CONFIG.headers,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch movie details");
+    }
+
+    const data = await response.json();
+    const filteredTrailers = data.results.filter(
+      (video: any) =>
+        video.type === "Trailer" && video.site === "YouTube" && video.official
+    );
+    return filteredTrailers;
+  } catch (err) {
+    console.error(err);
     throw err;
   }
 };

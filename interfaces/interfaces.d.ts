@@ -105,6 +105,14 @@ interface TvShowsDetails {
   vote_count: number;
 }
 
+interface Trailer {
+  name: string;
+  key: string;
+  type: string;
+  official: true;
+  id: string;
+}
+
 interface TrendingCardProps {
   movie: TrendingMovie;
   index: number;

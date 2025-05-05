@@ -2,10 +2,19 @@ import BackButton from "@/components/BackButton";
 import MovieCard from "@/components/Card";
 import MovieCast from "@/components/MovieCast";
 import MovieInfo from "@/components/MovieInfo";
+import TrailerModal from "@/components/TrailerModal";
 import { icons } from "@/constants/icons";
-import { fetchCasts, fetchMovieDetails, fetchMovies } from "@/services/api";
+import {
+  fetchCasts,
+  fetchMovieDetails,
+  fetchMovies,
+  fetchTrailers,
+} from "@/services/api";
 import useFetch from "@/services/useFetch";
-import FontAwesome from "@expo/vector-icons/FontAwesome5";
+import {
+  default as FontAwesome,
+  default as FontAwesome5,
+} from "@expo/vector-icons/FontAwesome5";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
@@ -15,12 +24,14 @@ import {
   Image,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
 const MovieDetails = () => {
   const { id } = useLocalSearchParams();
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
+  const [viewTrailer, setViewTrailer] = useState<string | null>(null);
 
   const { data: movie, loading } = useFetch(() =>
     fetchMovieDetails(id as string)
@@ -29,6 +40,10 @@ const MovieDetails = () => {
 
   const { data: similarMovies } = useFetch(() =>
     fetchMovies({ request: `/movie/${id}/similar` })
+  );
+
+  const { data: trailer } = useFetch(() =>
+    fetchTrailers(`/movie/${id}/videos`)
   );
 
   return (
@@ -43,6 +58,14 @@ const MovieDetails = () => {
         <View className="bg-primary flex-1">
           {/* Back Button */}
           <BackButton />
+
+          {/* Trailer Modal */}
+          {viewTrailer && (
+            <TrailerModal
+              videoId={viewTrailer}
+              onClose={() => setViewTrailer(null)}
+            />
+          )}
 
           <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
             <View className="relative">
@@ -118,6 +141,17 @@ const MovieDetails = () => {
                   scrollEnabled={false}
                 />
               </View>
+
+              {/* Trailer Button  */}
+              {trailer && trailer.length > 0 && (
+                <TouchableOpacity
+                  onPress={() => setViewTrailer(trailer[0].key)}
+                  className="flex-row flex-1 justify-center items-center w-full h-14 rounded-xl bg-action my-4 gap-x-5"
+                >
+                  <FontAwesome5 name="play" size={18} color={"black"} />
+                  <Text className="text-black text-lg">Watch Trailer</Text>
+                </TouchableOpacity>
+              )}
 
               {/* Overview */}
               <MovieInfo label="Overview" value={movie?.overview} />
