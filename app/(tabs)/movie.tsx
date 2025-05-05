@@ -3,11 +3,12 @@ import MovieBanner from "@/components/MovieBanner";
 import { allGenres, movieGenres } from "@/constants/genres";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  RefreshControl,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -20,6 +21,16 @@ const Movie = () => {
 
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // Simulate fetching data from the server
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 3000);
+  }, []);
+
   // Banner
   const { data, loading: bannerLoading } = useFetch(() =>
     fetchMovies({ request: "/movie/upcoming" })
@@ -29,6 +40,7 @@ const Movie = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [movies, setMovies] = useState<Movie[]>([]);
 
+  // Fetching by Genres
   useEffect(() => {
     const fetchMoviesByGenre = async () => {
       setLoading(true);
@@ -65,6 +77,9 @@ const Movie = () => {
       ) : (
         <View className="flex-1 bg-primary">
           <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
           >

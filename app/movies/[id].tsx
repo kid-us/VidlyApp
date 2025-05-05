@@ -17,11 +17,12 @@ import {
 } from "@expo/vector-icons/FontAwesome5";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
   Image,
+  RefreshControl,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -32,6 +33,16 @@ const MovieDetails = () => {
   const { id } = useLocalSearchParams();
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
   const [viewTrailer, setViewTrailer] = useState<string | null>(null);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // Simulate fetching data from the server
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 3000);
+  }, []);
 
   // Movies
   const { data: movie, loading } = useFetch(() =>
@@ -70,7 +81,12 @@ const MovieDetails = () => {
             />
           )}
 
-          <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            contentContainerStyle={{ paddingBottom: 80 }}
+          >
             <View className="relative">
               <Image
                 source={{

@@ -3,11 +3,12 @@ import MovieBanner from "@/components/MovieBanner";
 import Upcoming from "@/components/Upcoming";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  RefreshControl,
   ScrollView,
   Text,
   View,
@@ -18,11 +19,21 @@ export default function Index() {
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // Simulate fetching data from the server
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 3000);
+  }, []);
+
   // Movies
   const { data: movies, error } = useFetch(() =>
     fetchMovies({ request: "discover/movie?sort_by=popularity.desc" })
   );
-  
+
   // Banner
   const { data, loading } = useFetch(() =>
     fetchMovies({ request: "/trending/all/day" })
@@ -54,6 +65,9 @@ export default function Index() {
       ) : (
         <View className="flex-1 bg-primary">
           <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
           >
