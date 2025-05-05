@@ -1,7 +1,7 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView, StatusBar, Text, View } from "react-native";
 
 const TabIcon = ({ focused, title, icon }: any) => {
   if (focused) {
@@ -22,72 +22,75 @@ const TabIcon = ({ focused, title, icon }: any) => {
 
 const _layout = () => {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarItemStyle: {
-          width: "100%",
-          height: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        },
-        tabBarStyle: {
-          backgroundColor: "#18181b",
-          borderRadius: 50,
-          marginHorizontal: 20,
-          marginBottom: 36,
-          height: 50,
-          position: "absolute",
-          overflow: "hidden",
-          borderWidth: 1,
-          borderColor: "#0f0D23",
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Home" icon={"home"} />
-          ),
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar animated={true} barStyle={"light-content"} />
+      <Tabs
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarItemStyle: {
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          tabBarStyle: {
+            backgroundColor: "#18181b",
+            borderRadius: 50,
+            marginHorizontal: 20,
+            height: 50,
+            position: "absolute",
+            overflow: "hidden",
+            borderWidth: 1,
+            borderColor: "#0f0D23",
+            marginBottom: StatusBar.currentHeight,
+          },
         }}
-      />
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Home",
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon focused={focused} title="Home" icon={"home"} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="movie"
-        options={{
-          title: "Movies",
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Movies" icon={"movie-filter"} />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="movie"
+          options={{
+            title: "Movies",
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon focused={focused} title="Movies" icon={"movie-filter"} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="tvshow"
-        options={{
-          title: "Tv Shows",
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Tv Shows" icon={"live-tv"} />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="tvshow"
+          options={{
+            title: "Tv Shows",
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon focused={focused} title="Tv Shows" icon={"live-tv"} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="search"
-        options={{
-          title: "Search",
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Search" icon={"search"} />
-          ),
-        }}
-      />
-    </Tabs>
+        <Tabs.Screen
+          name="search"
+          options={{
+            title: "Search",
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon focused={focused} title="Search" icon={"search"} />
+            ),
+          }}
+        />
+      </Tabs>
+    </SafeAreaView>
   );
 };
 

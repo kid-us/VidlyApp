@@ -76,7 +76,7 @@ export default function Index() {
                 loop
                 autoPlay
                 width={screenWidth}
-                height={screenHeight / 1.7}
+                height={screenHeight / 1.4}
                 snapEnabled={true}
                 data={data}
                 autoPlayInterval={10000}
@@ -97,7 +97,7 @@ export default function Index() {
 
             <View className="flex-1 px-4">
               {/* Upcoming Movies */}
-              <Text className="text-lg font-semibold text-action/80 mb-4">
+              <Text className="text-lg font-semibold text-action/80/80 mb-4">
                 Upcoming Movies
               </Text>
 
@@ -127,7 +127,7 @@ export default function Index() {
                 <Text className="text-white">{error?.message}</Text>
               ) : (
                 <>
-                  <Text className="text-lg font-semibold text-action/80-5">
+                  <Text className="text-lg font-semibold text-action/80 mb-5">
                     Top Rated Movies
                   </Text>
 
@@ -157,7 +157,7 @@ export default function Index() {
               )}
 
               {/* Popular TV Shows */}
-              <Text className="text-lg font-semibold text-action/80-4">
+              <Text className="text-lg font-semibold text-action/80 mb-4">
                 Popular TV Shows
               </Text>
               <FlatList
@@ -186,7 +186,7 @@ export default function Index() {
                 <Text className="text-white">{error?.message}</Text>
               ) : (
                 <>
-                  <Text className="text-lg font-semibold text-action/80-5">
+                  <Text className="text-lg font-semibold text-action/80 mb-5">
                     Top Rated TV Shows
                   </Text>
 
@@ -210,7 +210,7 @@ export default function Index() {
                     ItemSeparatorComponent={() => <View className="my-2" />}
                     keyExtractor={(item) => item.id.toFixed(1)}
                     scrollEnabled={false}
-                    className="mt-2 pb-32"
+                    className="mt-2 pb-10"
                   />
                 </>
               )}

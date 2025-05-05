@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native";
 const BackButton = () => {
   return (
     <TouchableOpacity
-      className="absolute top-4 left-0 right-0 mx-2 w-14 h-14 bg-zinc-900/80 border border-gray-700 rounded-3xl py-3.5 items-center justify-center z-50"
+      className="absolute top-6 left-2 mx-2 w-14 h-14 bg-zinc-900/80 border border-gray-700 rounded-3xl py-3.5 items-center justify-center z-50"
       onPress={router.back}
     >
       <FontAwesome5 name="chevron-left" color="#eee" size={20} />
