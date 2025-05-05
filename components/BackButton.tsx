@@ -1,14 +1,15 @@
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { router } from "expo-router";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 const BackButton = () => {
   return (
     <TouchableOpacity
-      className="absolute bottom-5 left-0 right-0 mx-5 bg-action/70 rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
+      className="absolute top-4 left-0 right-0 mx-2 w-14 h-14 bg-action/70 rounded-3xl py-3.5 items-center justify-center z-50"
       onPress={router.back}
     >
-      <Text className="text-black font-semibold text-base">Go Back</Text>
+      <FontAwesome5 name="chevron-left" color="#eee" size={20} />
     </TouchableOpacity>
   );
 };
