@@ -4,6 +4,7 @@ interface Genres {
 }
 
 export const tvGenres: Genres[] = [
+  { key: 0, name: "Trending" },
   { key: 10759, name: "Action" },
   { key: 16, name: "Animation" },
   { key: 80, name: "Crime" },
