@@ -1,4 +1,3 @@
-import playBtn from "@/assets/images/play.png";
 import BackButton from "@/components/BackButton";
 import Card from "@/components/Card";
 import MovieCast from "@/components/MovieCast";
@@ -15,7 +14,6 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -54,30 +52,18 @@ const TvShowsDetails = () => {
                 className="w-full h-[500px]"
                 resizeMode="cover"
               />
-              {/* Trailer Button */}
-              <TouchableOpacity className="absolute -bottom-7 right-5 z-50">
-                <Image source={playBtn} className="size-14" />
-              </TouchableOpacity>
             </View>
 
-            {/*  */}
+            {/* Title */}
             <View className="flex-col items-start justify-center mt-5 px-5">
-              <Text className="text-white text-2xl font-semibold">
+              <Text className="text-white text-4xl font-semibold">
                 {movie?.name}
               </Text>
-              <Text className="text-zinc-400 mt-1">"{movie?.tagline}"</Text>
+              <Text className="text-zinc-400 mt-2">"{movie?.tagline}"</Text>
 
-              {/* Release date and Runtime */}
-              <View className="flex-row gap-x-3 mt-5">
-                <FontAwesome name="calendar" size={18} color="#777" />
-                <Text className="text-zinc-400">
-                  {movie?.first_air_date.split("-")[0]}
-                </Text>
-              </View>
-
-              {/* Rate and popularity with vote */}
-              <View className="flex-row items-center gap-x-5 mt-5">
-                <View className="flex-row gap-x-3 bg-dark-100 py-1 px-2 rounded">
+              {/* Rate Vote and Release date */}
+              <View className="flex-row gap-x-3 my-5">
+                <View className="flex-row gap-x-3">
                   <Image source={icons.star} />
                   <Text className="text-white">
                     {Math.round(movie?.vote_average ?? 0)}/10
@@ -85,14 +71,16 @@ const TvShowsDetails = () => {
                 </View>
 
                 <Text className="text-zinc-400">{movie?.vote_count} votes</Text>
-              </View>
 
-              {/* Overview */}
-              <MovieInfo label="Overview" value={movie?.overview} />
+                <FontAwesome name="calendar" size={18} color="#777" />
+                <Text className="text-zinc-400">
+                  {movie?.first_air_date.split("-")[0]}
+                </Text>
+              </View>
 
               {/* Genre */}
               <Text className="text-gray-400">Genre</Text>
-              <View className="flex-row gap-x-2 justify-start mt-2 mb-5">
+              <View className="flex-row gap-x-2 justify-start mt-2">
                 <FlatList
                   data={movie?.genres}
                   renderItem={({ item }) => (
@@ -113,25 +101,31 @@ const TvShowsDetails = () => {
                 />
               </View>
 
-              <Text className="text-zinc-300">
-                Status :<Text className="text-zinc-500"> {movie?.status}</Text>
-              </Text>
+              {/* Overview */}
+              <MovieInfo label="Overview" value={movie?.overview} />
 
-              {/* Budget and Revenue */}
-              <View className="flex flex-row gap-x-16">
-                {movie && (
-                  <>
-                    <MovieInfo
-                      label="Season"
-                      value={movie?.number_of_seasons}
-                    />
+              {/* Status, Seasons and Episodes */}
+              <View className="flex-row gap-x-5 items-center justify-center mb-5">
+                <Text className="text-zinc-300">
+                  Status :
+                  <Text className="text-zinc-500"> {movie?.status}</Text>
+                </Text>
 
-                    <MovieInfo
-                      label="Episodes"
-                      value={movie?.number_of_episodes}
-                    />
-                  </>
-                )}
+                <Text className="text-zinc-300">
+                  Season :
+                  <Text className="text-zinc-500">
+                    {" "}
+                    {movie?.number_of_seasons}
+                  </Text>
+                </Text>
+
+                <Text className="text-zinc-300">
+                  Episodes :
+                  <Text className="text-zinc-500">
+                    {" "}
+                    {movie?.number_of_episodes}
+                  </Text>
+                </Text>
               </View>
 
               {/* Production */}
@@ -168,7 +162,7 @@ const TvShowsDetails = () => {
                 ItemSeparatorComponent={() => <View className="my-2" />}
                 keyExtractor={(item) => item.name}
                 scrollEnabled={false}
-                className="my-20"
+                className="mb-8 mt-6"
               />
 
               {/* Similar Movies */}

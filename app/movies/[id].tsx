@@ -177,7 +177,7 @@ const MovieDetails = () => {
                 ItemSeparatorComponent={() => <View className="my-2" />}
                 keyExtractor={(item) => item.cast_id.toString()}
                 scrollEnabled={false}
-                className="my-8"
+                className="mb-8 mt-6"
               />
 
               {/* Recommendation */}
