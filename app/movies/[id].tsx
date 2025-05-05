@@ -1,4 +1,3 @@
-import playBtn from "@/assets/images/play.png";
 import BackButton from "@/components/BackButton";
 import MovieCard from "@/components/Card";
 import MovieCast from "@/components/MovieCast";
@@ -7,6 +6,7 @@ import { icons } from "@/constants/icons";
 import { fetchCasts, fetchMovieDetails, fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
+import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -15,7 +15,6 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -44,7 +43,7 @@ const MovieDetails = () => {
         <View className="bg-primary flex-1">
           {/* Back Button */}
           <BackButton />
-          
+
           <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
             <View className="relative">
               <Image
@@ -54,20 +53,36 @@ const MovieDetails = () => {
                 className="w-full h-[500px]"
                 resizeMode="cover"
               />
-              {/* Trailer Button */}
-              <TouchableOpacity className="absolute -bottom-7 right-5 z-50">
-                <Image source={playBtn} className="size-14" />
-              </TouchableOpacity>
+
+              <LinearGradient
+                colors={["rgba(0, 0, 0, 0.80)", "rgba(1, 1, 1, 0.10)"]}
+                start={{ x: 0.5, y: 1 }}
+                end={{ x: 0.5, y: 0 }}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                }}
+              />
             </View>
 
             <View className="flex-col items-start justify-center mt-5 px-5">
-              <Text className="text-white text-2xl font-semibold">
+              <Text className="text-white text-4xl font-semibold">
                 {movie?.title}
               </Text>
-              <Text className="text-zinc-400 mt-1">"{movie?.tagline}"</Text>
+              <Text className="text-zinc-400 mt-2">"{movie?.tagline}"</Text>
 
-              {/* Release date and Runtime */}
-              <View className="flex-row items-center gap-x-10 mt-5">
+              {/*Rate,  Release date and Runtime */}
+              <View className="flex-row items-center gap-x-5 my-5">
+                <View className="flex-row gap-x-3">
+                  <Image source={icons.star} />
+                  <Text className="text-white">
+                    {Math.round(movie?.vote_average ?? 0)}/10
+                  </Text>
+                </View>
+
                 <View className="flex-row gap-x-3">
                   <FontAwesome name="calendar" size={18} color="#777" />
                   <Text className="text-zinc-400">
@@ -77,28 +92,13 @@ const MovieDetails = () => {
 
                 <View className="flex-row gap-x-3">
                   <FontAwesome name="clock" size={18} color={"#777"} />
-                  <Text className="text-zinc-400">{movie?.runtime}</Text>
+                  <Text className="text-zinc-400">{movie?.runtime} min</Text>
                 </View>
               </View>
-
-              {/* Rate and popularity with vote */}
-              <View className="flex-row items-center gap-x-5 mt-5">
-                <View className="flex-row gap-x-3 bg-dark-100 py-1 px-2 rounded">
-                  <Image source={icons.star} />
-                  <Text className="text-white">
-                    {Math.round(movie?.vote_average ?? 0)}/10
-                  </Text>
-                </View>
-
-                <Text className="text-zinc-400">{movie?.vote_count} votes</Text>
-              </View>
-
-              {/* Overview */}
-              <MovieInfo label="Overview" value={movie?.overview} />
 
               {/* Genre */}
               <Text className="text-gray-400">Genre</Text>
-              <View className="flex-row flex-wrap w-full gap-x-2 justify-start mt-2 mb-5">
+              <View className="flex-row flex-wrap w-full gap-x-2 justify-start mt-2">
                 <FlatList
                   data={movie?.genres}
                   renderItem={({ item }) => (
@@ -118,6 +118,9 @@ const MovieDetails = () => {
                   scrollEnabled={false}
                 />
               </View>
+
+              {/* Overview */}
+              <MovieInfo label="Overview" value={movie?.overview} />
 
               {/* Budget and Revenue */}
               <View className="flex flex-row gap-x-16">
