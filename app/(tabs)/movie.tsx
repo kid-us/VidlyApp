@@ -148,7 +148,7 @@ const Movie = () => {
                   ItemSeparatorComponent={() => <View className="w-2" />}
                 />
 
-                <Text className="text-lg font-semibold text-action mb-4">
+                <Text className="text-lg font-semibold text-action/80 mb-4">
                   {genre === null ? "Trending" : genreName(genre)} Movies
                 </Text>
 

@@ -92,7 +92,7 @@ const Search = () => {
               movies?.length > 0 && (
                 <Text className="text-xl text-white mb-5">
                   Search Result for :{" "}
-                  <Text className="text-action font-semibold">
+                  <Text className="text-action/80 font-semibold">
                     {searchQuery}
                   </Text>
                 </Text>

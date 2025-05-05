@@ -1,6 +1,6 @@
 import BackButton from "@/components/BackButton";
 import Card from "@/components/Card";
-import MovieCast from "@/components/MovieCast";
+import MovieCast from "@/components/Cast";
 import MovieInfo from "@/components/MovieInfo";
 import TrailerModal from "@/components/TrailerModal";
 import { icons } from "@/constants/icons";
@@ -195,7 +195,7 @@ const TvShowsDetails = () => {
               </View>
 
               {/* Casts */}
-              <Text className="text-action text-xl">Casts</Text>
+              <Text className="text-action/80 text-xl">Casts</Text>
               <FlatList
                 data={cast}
                 renderItem={({ item }) => (
@@ -219,7 +219,7 @@ const TvShowsDetails = () => {
               />
 
               {/* Similar Movies */}
-              <Text className="text-action text-xl">Similar Movies</Text>
+              <Text className="text-action/80 text-xl">Similar Movies</Text>
               <FlatList
                 data={similarTvShows?.slice(0, 4)}
                 renderItem={({ item }) => (

@@ -71,10 +71,6 @@ export default function Index() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
           >
-            {/* <Image
-              source={logo}
-              className="absolute top-0 z-50 size-14 ms-5 mt-5"
-            /> */}
             {data && (
               <Carousel
                 loop
@@ -101,7 +97,7 @@ export default function Index() {
 
             <View className="flex-1 px-4">
               {/* Upcoming Movies */}
-              <Text className="text-lg font-semibold text-action mb-4">
+              <Text className="text-lg font-semibold text-action/80 mb-4">
                 Upcoming Movies
               </Text>
 
@@ -131,7 +127,7 @@ export default function Index() {
                 <Text className="text-white">{error?.message}</Text>
               ) : (
                 <>
-                  <Text className="text-lg font-semibold text-action mb-5">
+                  <Text className="text-lg font-semibold text-action/80-5">
                     Top Rated Movies
                   </Text>
 
@@ -161,7 +157,7 @@ export default function Index() {
               )}
 
               {/* Popular TV Shows */}
-              <Text className="text-lg font-semibold text-action mb-4">
+              <Text className="text-lg font-semibold text-action/80-4">
                 Popular TV Shows
               </Text>
               <FlatList
@@ -190,7 +186,7 @@ export default function Index() {
                 <Text className="text-white">{error?.message}</Text>
               ) : (
                 <>
-                  <Text className="text-lg font-semibold text-action mb-5">
+                  <Text className="text-lg font-semibold text-action/80-5">
                     Top Rated TV Shows
                   </Text>
 

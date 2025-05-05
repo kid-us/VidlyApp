@@ -12,7 +12,7 @@ const SimilarMovies = ({ data }: Props) => {
 
   return (
     <>
-      <Text className="text-action text-xl">Similar Movies</Text>
+      <Text className="text-action/80 text-xl">Similar Movies</Text>
       <FlatList
         data={data}
         renderItem={({ item }) => (
