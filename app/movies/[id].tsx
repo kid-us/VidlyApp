@@ -33,15 +33,18 @@ const MovieDetails = () => {
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
   const [viewTrailer, setViewTrailer] = useState<string | null>(null);
 
+  // Movies
   const { data: movie, loading } = useFetch(() =>
     fetchMovieDetails(id as string)
   );
   const { data: cast } = useFetch(() => fetchCasts(`${id}`, "movie"));
 
+  // Similar Movies
   const { data: similarMovies } = useFetch(() =>
     fetchMovies({ request: `/movie/${id}/similar` })
   );
 
+  // Trailers
   const { data: trailer } = useFetch(() =>
     fetchTrailers(`/movie/${id}/videos`)
   );

@@ -2,10 +2,19 @@ import BackButton from "@/components/BackButton";
 import Card from "@/components/Card";
 import MovieCast from "@/components/MovieCast";
 import MovieInfo from "@/components/MovieInfo";
+import TrailerModal from "@/components/TrailerModal";
 import { icons } from "@/constants/icons";
-import { fetchCasts, fetchMovies, fetchTvShowsDetails } from "@/services/api";
+import {
+  fetchCasts,
+  fetchMovies,
+  fetchTrailers,
+  fetchTvShowsDetails,
+} from "@/services/api";
 import useFetch from "@/services/useFetch";
-import FontAwesome from "@expo/vector-icons/FontAwesome5";
+import {
+  default as FontAwesome,
+  default as FontAwesome5,
+} from "@expo/vector-icons/FontAwesome5";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -14,21 +23,28 @@ import {
   Image,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
 const TvShowsDetails = () => {
   const { id } = useLocalSearchParams();
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
+  const [viewTrailer, setViewTrailer] = useState<string | null>(null);
 
-  const { data: movie, loading } = useFetch(() =>
+  // Tv Shows
+  const { data: tvShows, loading } = useFetch(() =>
     fetchTvShowsDetails(id as string)
   );
   const { data: cast } = useFetch(() => fetchCasts(`${id}`, "tv"));
 
-  const { data: similarMovies } = useFetch(() =>
+  // Similar Tv Shows
+  const { data: similarTvShows } = useFetch(() =>
     fetchMovies({ request: `/tv/${id}/similar` })
   );
+
+  // Trailers
+  const { data: trailer } = useFetch(() => fetchTrailers(`/tv/${id}/videos`));
 
   return (
     <>
@@ -43,11 +59,19 @@ const TvShowsDetails = () => {
           {/* Back Button */}
           <BackButton />
 
+          {/* Trailer Modal */}
+          {viewTrailer && (
+            <TrailerModal
+              videoId={viewTrailer}
+              onClose={() => setViewTrailer(null)}
+            />
+          )}
+
           <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
             <View className="relative">
               <Image
                 source={{
-                  uri: `https://image.tmdb.org/t/p/w500${movie?.poster_path}`,
+                  uri: `https://image.tmdb.org/t/p/w500${tvShows?.poster_path}`,
                 }}
                 className="w-full h-[500px]"
                 resizeMode="cover"
@@ -57,24 +81,26 @@ const TvShowsDetails = () => {
             {/* Title */}
             <View className="flex-col items-start justify-center mt-5 px-5">
               <Text className="text-white text-4xl font-semibold">
-                {movie?.name}
+                {tvShows?.name}
               </Text>
-              <Text className="text-zinc-400 mt-2">"{movie?.tagline}"</Text>
+              <Text className="text-zinc-400 mt-2">"{tvShows?.tagline}"</Text>
 
               {/* Rate Vote and Release date */}
               <View className="flex-row gap-x-3 my-5">
                 <View className="flex-row gap-x-3">
                   <Image source={icons.star} />
                   <Text className="text-white">
-                    {Math.round(movie?.vote_average ?? 0)}/10
+                    {Math.round(tvShows?.vote_average ?? 0)}/10
                   </Text>
                 </View>
 
-                <Text className="text-zinc-400">{movie?.vote_count} votes</Text>
+                <Text className="text-zinc-400">
+                  {tvShows?.vote_count} votes
+                </Text>
 
                 <FontAwesome name="calendar" size={18} color="#777" />
                 <Text className="text-zinc-400">
-                  {movie?.first_air_date.split("-")[0]}
+                  {tvShows?.first_air_date.split("-")[0]}
                 </Text>
               </View>
 
@@ -82,7 +108,7 @@ const TvShowsDetails = () => {
               <Text className="text-gray-400">Genre</Text>
               <View className="flex-row gap-x-2 justify-start mt-2">
                 <FlatList
-                  data={movie?.genres}
+                  data={tvShows?.genres}
                   renderItem={({ item }) => (
                     <Text className="bg-teal-600 text-white px-4 py-1 rounded text-sm">
                       {item.name}
@@ -101,21 +127,32 @@ const TvShowsDetails = () => {
                 />
               </View>
 
+              {/* Trailer Button  */}
+              {trailer && trailer.length > 0 && (
+                <TouchableOpacity
+                  onPress={() => setViewTrailer(trailer[0].key)}
+                  className="flex-row flex-1 justify-center items-center w-full h-14 rounded-xl bg-action my-4 gap-x-5"
+                >
+                  <FontAwesome5 name="play" size={18} color={"black"} />
+                  <Text className="text-black text-lg">Watch Trailer</Text>
+                </TouchableOpacity>
+              )}
+
               {/* Overview */}
-              <MovieInfo label="Overview" value={movie?.overview} />
+              <MovieInfo label="Overview" value={tvShows?.overview} />
 
               {/* Status, Seasons and Episodes */}
               <View className="flex-row gap-x-5 items-center justify-center mb-5">
                 <Text className="text-zinc-300">
                   Status :
-                  <Text className="text-zinc-500"> {movie?.status}</Text>
+                  <Text className="text-zinc-500"> {tvShows?.status}</Text>
                 </Text>
 
                 <Text className="text-zinc-300">
                   Season :
                   <Text className="text-zinc-500">
                     {" "}
-                    {movie?.number_of_seasons}
+                    {tvShows?.number_of_seasons}
                   </Text>
                 </Text>
 
@@ -123,7 +160,7 @@ const TvShowsDetails = () => {
                   Episodes :
                   <Text className="text-zinc-500">
                     {" "}
-                    {movie?.number_of_episodes}
+                    {tvShows?.number_of_episodes}
                   </Text>
                 </Text>
               </View>
@@ -131,7 +168,7 @@ const TvShowsDetails = () => {
               {/* Production */}
               <Text className="text-zinc-300">Production Companies</Text>
               <View className="flex-row flex-wrap gap-x-3 justify-start mt-2 mb-8">
-                {movie?.production_companies.map((g) => (
+                {tvShows?.production_companies.map((g) => (
                   <Text
                     key={g.id}
                     className="text-zinc-400 py-1 rounded text-sm"
@@ -168,7 +205,7 @@ const TvShowsDetails = () => {
               {/* Similar Movies */}
               <Text className="text-action text-xl">Similar Movies</Text>
               <FlatList
-                data={similarMovies?.slice(0, 4)}
+                data={similarTvShows?.slice(0, 4)}
                 renderItem={({ item }) => (
                   <Card
                     {...item}
