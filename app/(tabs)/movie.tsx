@@ -1,14 +1,16 @@
 import Card from "@/components/Card";
 import MovieBanner from "@/components/MovieBanner";
+import { allGenres, movieGenres } from "@/constants/genres";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
   FlatList,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
@@ -19,18 +21,42 @@ const Movie = () => {
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
 
   // Banner
-  const { data, loading } = useFetch(() =>
+  const { data, loading: bannerLoading } = useFetch(() =>
     fetchMovies({ request: "/movie/upcoming" })
   );
 
-  // Movies
-  const { data: movies, error } = useFetch(() =>
-    fetchMovies({ request: "/trending/movie/day" })
-  );
+  const [genre, setGenre] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    const fetchMoviesByGenre = async () => {
+      setLoading(true);
+      try {
+        const request = genre
+          ? `/discover/movie?with_genres=${genre}`
+          : "/trending/movie/day";
+        const data = await fetchMovies({ request });
+        setMovies(data);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMoviesByGenre();
+  }, [genre]);
+
+  // Getting genre name
+  const genreName = (genre: number) => {
+    const pick = allGenres.find((g) => g.key === genre);
+    return pick ? pick.name : "";
+  };
 
   return (
     <>
-      {loading ? (
+      {bannerLoading ? (
         <ActivityIndicator
           size={"large"}
           color={"#FFC20B"}
@@ -67,34 +93,74 @@ const Movie = () => {
             )}
 
             {/* Movies */}
-            <View className="flex-1 px-4">
-              <Text className="text-lg font-semibold text-action mb-4">
-                Trending Movies
-              </Text>
-
-              <FlatList
-                data={movies}
-                renderItem={({ item }) => (
-                  <Card
-                    {...item}
-                    type="movie"
-                    longPressedMovie={longPressedMovie}
-                    setLongPressedMovie={setLongPressedMovie}
-                  />
-                )}
-                numColumns={3}
-                columnWrapperStyle={{
-                  justifyContent: "flex-start",
-                  gap: 10,
-                  paddingRight: 5,
-                  marginBottom: 10,
-                }}
-                ItemSeparatorComponent={() => <View className="my-2" />}
-                keyExtractor={(item) => item.id.toFixed(1)}
-                scrollEnabled={false}
-                className="mt-2 mb-8"
+            {genre && loading ? (
+              <ActivityIndicator
+                size={"large"}
+                color={"#FFC20B"}
+                className="self-center flex-1 bg-primary w-full"
               />
-            </View>
+            ) : (
+              <View className="flex-1 px-4">
+                {/* Genres */}
+                <Text className="text-zinc-400 text-lg">Genres</Text>
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  className="mb-8 mt-3"
+                  data={movieGenres}
+                  contentContainerStyle={{
+                    gap: 10,
+                  }}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        item.key === 0 ? setGenre(null) : setGenre(item.key)
+                      }
+                    >
+                      <Text
+                        className={`${
+                          genre === item.key ||
+                          (genre === null && item.key === 0)
+                            ? "bg-action/80 text-white"
+                            : "bg-zinc-900/80 text-white"
+                        } px-5 py-2 rounded-full text-center text-sm`}
+                      >
+                        {item.name}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  keyExtractor={(item) => item.name.toString()}
+                  ItemSeparatorComponent={() => <View className="w-2" />}
+                />
+
+                <Text className="text-lg font-semibold text-action mb-4">
+                  {genre === null ? "Trending" : genreName(genre)} Movies
+                </Text>
+
+                <FlatList
+                  data={movies}
+                  renderItem={({ item }) => (
+                    <Card
+                      {...item}
+                      type="movie"
+                      longPressedMovie={longPressedMovie}
+                      setLongPressedMovie={setLongPressedMovie}
+                    />
+                  )}
+                  numColumns={3}
+                  columnWrapperStyle={{
+                    justifyContent: "flex-start",
+                    gap: 10,
+                    paddingRight: 5,
+                    marginBottom: 10,
+                  }}
+                  ItemSeparatorComponent={() => <View className="my-2" />}
+                  keyExtractor={(item) => item.id.toFixed(1)}
+                  scrollEnabled={false}
+                  className="mt-2 mb-8"
+                />
+              </View>
+            )}
           </ScrollView>
         </View>
       )}
