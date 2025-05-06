@@ -1,5 +1,7 @@
 import BackButton from "@/components/BackButton";
 import CastList from "@/components/CastList";
+import CoverImage from "@/components/CoverImage";
+import Genre from "@/components/Genre";
 import MovieInfo from "@/components/MovieInfo";
 import Production from "@/components/Production";
 import SimilarItems from "@/components/SimilarItems";
@@ -14,14 +16,11 @@ import {
 } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { default as FontAwesome } from "@expo/vector-icons/FontAwesome5";
-import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
-  FlatList,
   Image,
-  ImageBackground,
   RefreshControl,
   ScrollView,
   Text,
@@ -86,30 +85,15 @@ const MovieDetails = () => {
             }
             contentContainerStyle={{ paddingBottom: 80 }}
           >
-            <View className="relative">
-              <ImageBackground
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500${movie?.poster_path}`,
-                }}
-                className="w-full h-[600px]"
-                resizeMode="stretch"
+            {/* Cover Image */}
+            {movie && (
+              <CoverImage
+                poster={movie.poster_path}
+                poster2={movie.backdrop_path}
               />
+            )}
 
-              <LinearGradient
-                colors={["rgba(0, 0, 0, 0.80)", "rgba(1, 1, 1, 0.10)"]}
-                start={{ x: 0.5, y: 1 }}
-                end={{ x: 0.5, y: 0 }}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                }}
-              />
-            </View>
-
-            <View className="flex-col items-start justify-center mt-5 px-5">
+            <View className="flex-col items-start justify-center mt-6 px-5">
               <Text className="text-white text-4xl font-semibold">
                 {movie?.title}
               </Text>
@@ -138,27 +122,9 @@ const MovieDetails = () => {
               </View>
 
               {/* Genre */}
-              <Text className="text-gray-400">Genre</Text>
-              <View className="flex-row flex-wrap w-full gap-x-2 justify-start mt-2">
-                <FlatList
-                  data={movie?.genres}
-                  renderItem={({ item }) => (
-                    <Text className="bg-teal-600 text-white px-4 py-1 rounded text-sm">
-                      {item.name}
-                    </Text>
-                  )}
-                  keyExtractor={(item) => item.id.toString()}
-                  numColumns={3}
-                  columnWrapperStyle={{
-                    justifyContent: "flex-start",
-                    gap: 10,
-                    paddingRight: 5,
-                    marginBottom: 10,
-                  }}
-                  ItemSeparatorComponent={() => <View className="my-2" />}
-                  scrollEnabled={false}
-                />
-              </View>
+              {movie && movie.genres.length > 0 && (
+                <Genre genres={movie.genres} />
+              )}
 
               {/* Trailer Button  */}
               {trailer && trailer.length > 0 && (

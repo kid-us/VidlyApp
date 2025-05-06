@@ -1,5 +1,7 @@
 import BackButton from "@/components/BackButton";
 import CastList from "@/components/CastList";
+import CoverImage from "@/components/CoverImage";
+import Genre from "@/components/Genre";
 import MovieInfo from "@/components/MovieInfo";
 import Production from "@/components/Production";
 import SimilarItems from "@/components/SimilarItems";
@@ -18,7 +20,6 @@ import { useLocalSearchParams } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
-  FlatList,
   Image,
   RefreshControl,
   ScrollView,
@@ -82,18 +83,16 @@ const TvShowsDetails = () => {
             }
             contentContainerStyle={{ paddingBottom: 80 }}
           >
-            <View className="relative">
-              <Image
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500${tvShows?.poster_path}`,
-                }}
-                className="w-full h-[500px]"
-                resizeMode="cover"
+            {/* Cover Image */}
+            {tvShows && (
+              <CoverImage
+                poster={tvShows.poster_path}
+                poster2={tvShows.backdrop_path}
               />
-            </View>
+            )}
 
             {/* Title */}
-            <View className="flex-col items-start justify-center mt-5 px-5">
+            <View className="flex-col items-start justify-center mt-6 px-5">
               <Text className="text-white text-4xl font-semibold">
                 {tvShows?.name}
               </Text>
@@ -119,27 +118,9 @@ const TvShowsDetails = () => {
               </View>
 
               {/* Genre */}
-              <Text className="text-gray-400">Genre</Text>
-              <View className="flex-row gap-x-2 justify-start mt-2">
-                <FlatList
-                  data={tvShows?.genres}
-                  renderItem={({ item }) => (
-                    <Text className="bg-teal-600 text-white px-4 py-1 rounded text-sm">
-                      {item.name}
-                    </Text>
-                  )}
-                  keyExtractor={(item) => item.id.toString()}
-                  numColumns={3}
-                  columnWrapperStyle={{
-                    justifyContent: "flex-start",
-                    gap: 10,
-                    paddingRight: 5,
-                    marginBottom: 5,
-                  }}
-                  ItemSeparatorComponent={() => <View className="my-2" />}
-                  scrollEnabled={false}
-                />
-              </View>
+              {tvShows && tvShows.genres.length > 0 && (
+                <Genre genres={tvShows.genres} />
+              )}
 
               {/* Trailer Button  */}
               {trailer && trailer.length > 0 && (
