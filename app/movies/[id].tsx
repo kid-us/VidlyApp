@@ -22,6 +22,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  ImageBackground,
   RefreshControl,
   ScrollView,
   Text,
@@ -88,12 +89,12 @@ const MovieDetails = () => {
             contentContainerStyle={{ paddingBottom: 80 }}
           >
             <View className="relative">
-              <Image
+              <ImageBackground
                 source={{
                   uri: `https://image.tmdb.org/t/p/w500${movie?.poster_path}`,
                 }}
-                className="w-full h-[500px]"
-                resizeMode="cover"
+                className="w-full h-[600px]"
+                resizeMode="stretch"
               />
 
               <LinearGradient
