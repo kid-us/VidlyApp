@@ -6,7 +6,7 @@ import { SafeAreaView, StatusBar, Text, View } from "react-native";
 const TabIcon = ({ focused, title, icon }: any) => {
   if (focused) {
     return (
-      <View className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden bg-action">
+      <View className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded overflow-hidden bg-action">
         <MaterialIcons name={icon} size={21} color={"#000"} />
         <Text className="text-secondary font-bold ml-2 text-sm">{title}</Text>
       </View>
@@ -23,26 +23,17 @@ const TabIcon = ({ focused, title, icon }: any) => {
 const _layout = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar animated={true} barStyle={"light-content"} />
+      <StatusBar animated={true} backgroundColor={"#080708"} />
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarItemStyle: {
-            width: "100%",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          },
           tabBarStyle: {
             backgroundColor: "#18181b",
-            borderRadius: 50,
-            marginHorizontal: 20,
             height: 50,
-            position: "absolute",
             overflow: "hidden",
             borderWidth: 1,
             borderColor: "#0f0D23",
-            marginBottom: StatusBar.currentHeight,
+            marginBottom: 50,
           },
         }}
       >
