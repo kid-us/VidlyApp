@@ -13,12 +13,14 @@ import {
   Text,
   View,
 } from "react-native";
+import { useSharedValue } from "react-native-reanimated";
 import Carousel from "react-native-reanimated-carousel";
 
 export default function Index() {
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
+  const progress = useSharedValue<number>(0);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -72,32 +74,41 @@ export default function Index() {
             contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
           >
             {data && data.length > 0 && (
-              <Carousel
-                loop
-                autoPlay
-                width={screenWidth}
-                height={screenHeight / 1.4}
-                snapEnabled={true}
-                data={data}
-                autoPlayInterval={10000}
-                style={{ width: "100%" }}
-                renderItem={({ item }) => (
-                  <MovieBanner
-                    key={item.id}
-                    overview={item.overview}
-                    poster_path={item.poster_path}
-                    id={item.id}
-                    title={item.title}
-                    backdrop_path={item.backdrop_path}
-                    name={item.name}
-                  />
-                )}
-              />
+              <View id="carousel-component">
+                <Carousel
+                  loop
+                  autoPlay
+                  width={screenWidth}
+                  height={screenHeight / 1.4}
+                  snapEnabled={true}
+                  data={data.filter(
+                    (item) => item.backdrop_path && item.poster_path
+                  )}
+                  autoPlayInterval={10000}
+                  style={{ width: "100%" }}
+                  mode="parallax"
+                  modeConfig={{
+                    parallaxScrollingScale: 0.9,
+                    parallaxScrollingOffset: 50,
+                  }}
+                  onProgressChange={progress}
+                  renderItem={({ item }) => (
+                    <MovieBanner
+                      key={item.id}
+                      overview={item.overview}
+                      poster_path={item.poster_path}
+                      title={item.title}
+                      backdrop_path={item.backdrop_path}
+                      name={item.name}
+                    />
+                  )}
+                />
+              </View>
             )}
 
             <View className="flex-1 px-4">
               {/* Upcoming Movies */}
-              <Text className="text-lg font-semibold text-action/80/80 mb-4">
+              <Text className="text-lg font-semibold text-action/80 mb-4">
                 Upcoming Movies
               </Text>
 

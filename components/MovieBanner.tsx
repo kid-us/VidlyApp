@@ -5,13 +5,11 @@ interface BannerProps {
   poster_path: string;
   title: string;
   overview: string;
-  id: string | number;
   backdrop_path: string;
   name: string;
 }
 
 const MovieBanner = ({
-  id,
   overview,
   poster_path,
   title,
