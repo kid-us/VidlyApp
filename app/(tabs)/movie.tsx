@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import GenresList from "@/components/GenresList";
 import MovieBanner from "@/components/MovieBanner";
 import { allGenres, movieGenres } from "@/constants/genres";
 import { fetchMovies } from "@/services/api";
@@ -11,7 +12,6 @@ import {
   RefreshControl,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
@@ -98,7 +98,6 @@ const Movie = () => {
                     key={item.id}
                     overview={item.overview}
                     poster_path={item.poster_path}
-                    id={item.id}
                     title={item.title}
                     backdrop_path={item.backdrop_path}
                     name={item.name}
@@ -116,36 +115,11 @@ const Movie = () => {
               />
             ) : (
               <View className="flex-1 px-4">
-                {/* Genres */}
-                <Text className="text-zinc-400 text-lg">Genres</Text>
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  className="mb-8 mt-3"
-                  data={movieGenres}
-                  contentContainerStyle={{
-                    gap: 10,
-                  }}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      onPress={() =>
-                        item.key === 0 ? setGenre(null) : setGenre(item.key)
-                      }
-                    >
-                      <Text
-                        className={`${
-                          genre === item.key ||
-                          (genre === null && item.key === 0)
-                            ? "bg-action/80 text-white"
-                            : "bg-zinc-900/80 text-white"
-                        } px-5 py-2 rounded-full text-center text-sm`}
-                      >
-                        {item.name}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                  keyExtractor={(item) => item.name.toString()}
-                  ItemSeparatorComponent={() => <View className="w-2" />}
+                {/* Genres List*/}
+                <GenresList
+                  genre={genre}
+                  genresList={movieGenres}
+                  setGenre={(genre) => setGenre(genre)}
                 />
 
                 <Text className="text-lg font-semibold text-action/80 mb-4">
