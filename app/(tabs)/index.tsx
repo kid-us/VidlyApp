@@ -71,7 +71,7 @@ export default function Index() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
           >
-            {data && (
+            {data && data.length > 0 && (
               <Carousel
                 loop
                 autoPlay

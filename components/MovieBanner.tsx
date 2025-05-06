@@ -28,7 +28,7 @@ const MovieBanner = ({
                 ? `https://image.tmdb.org/t/p/w500${poster_path}`
                 : `https://image.tmdb.org/t/p/w500${backdrop_path}`,
             }}
-            resizeMode="cover"
+            resizeMode="stretch"
           >
             {/* Hero Title and overview */}
             <View className="relative flex justify-center items-start h-full px-5">
