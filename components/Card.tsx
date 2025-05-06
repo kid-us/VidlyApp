@@ -45,7 +45,7 @@ const Card = ({
     <>
       {/* Conditionally show details */}
       {longPressedMovie === id && (
-        <View className="absolute -bottom-44 w-[100%] z-50 bg-primary border border-zinc-500 px-5 py-8 rounded-2xl">
+        <View className="absolute top-0 w-[100%] z-50 bg-primary border border-zinc-500 px-5 py-8 rounded-2xl">
           <Text className="text-white text-lg font-bold">{title}</Text>
 
           {/* Rating */}
