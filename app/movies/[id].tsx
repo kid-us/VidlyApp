@@ -3,6 +3,7 @@ import CastList from "@/components/CastList";
 import MovieInfo from "@/components/MovieInfo";
 import Production from "@/components/Production";
 import SimilarItems from "@/components/SimilarItems";
+import TrailerButton from "@/components/TrailerButton";
 import TrailerModal from "@/components/TrailerModal";
 import { icons } from "@/constants/icons";
 import {
@@ -12,10 +13,7 @@ import {
   fetchTrailers,
 } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import {
-  default as FontAwesome,
-  default as FontAwesome5,
-} from "@expo/vector-icons/FontAwesome5";
+import { default as FontAwesome } from "@expo/vector-icons/FontAwesome5";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import React, { useCallback, useState } from "react";
@@ -27,7 +25,6 @@ import {
   RefreshControl,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -165,13 +162,9 @@ const MovieDetails = () => {
 
               {/* Trailer Button  */}
               {trailer && trailer.length > 0 && (
-                <TouchableOpacity
-                  onPress={() => setViewTrailer(trailer[0].key)}
-                  className="flex-row flex-1 justify-center items-center w-full h-14 rounded-xl bg-action my-4 gap-x-5"
-                >
-                  <FontAwesome5 name="play" size={18} color={"black"} />
-                  <Text className="text-black text-lg">Watch Trailer</Text>
-                </TouchableOpacity>
+                <TrailerButton
+                  viewTrailer={() => setViewTrailer(trailer[0].key)}
+                />
               )}
 
               {/* Overview */}
