@@ -1,7 +1,8 @@
 import BackButton from "@/components/BackButton";
-import MovieCard from "@/components/Card";
-import MovieCast from "@/components/Cast";
+import CastList from "@/components/CastList";
 import MovieInfo from "@/components/MovieInfo";
+import Production from "@/components/Production";
+import SimilarItems from "@/components/SimilarItems";
 import TrailerModal from "@/components/TrailerModal";
 import { icons } from "@/constants/icons";
 import {
@@ -198,67 +199,17 @@ const MovieDetails = () => {
               </View>
 
               {/* Production */}
-              <Text className="text-zinc-300">Production Companies</Text>
-              <View className="flex-row flex-wrap gap-x-3 justify-start mt-2 mb-8">
-                {movie?.production_companies.map((g) => (
-                  <Text
-                    key={g.id}
-                    className="text-zinc-500 py-1 rounded text-sm"
-                  >
-                    {g.name}
-                  </Text>
-                ))}
-              </View>
+              {movie && movie?.production_companies.length > 0 && (
+                <Production production={movie.production_companies} />
+              )}
 
               {/* Casts */}
-              <Text className="text-action/80 text-xl">Casts</Text>
-              <FlatList
-                data={cast}
-                renderItem={({ item }) => (
-                  <MovieCast
-                    characterName={item.character}
-                    image={item.profile_path}
-                    name={item.name}
-                  />
-                )}
-                numColumns={3}
-                columnWrapperStyle={{
-                  justifyContent: "flex-start",
-                  gap: 10,
-                  paddingRight: 5,
-                  marginBottom: 10,
-                }}
-                ItemSeparatorComponent={() => <View className="my-2" />}
-                keyExtractor={(item) => item.cast_id.toString()}
-                scrollEnabled={false}
-                className="mb-8 mt-6"
-              />
+              {cast && cast.length > 0 && <CastList cast={cast} />}
 
-              {/* Recommendation */}
-              <Text className="text-action/80 text-xl">Similar Movies</Text>
-              <FlatList
-                data={similarMovies?.slice(0, 4)}
-                renderItem={({ item }) => (
-                  <MovieCard
-                    {...item}
-                    type="movie"
-                    longPressedMovie={longPressedMovie}
-                    setLongPressedMovie={setLongPressedMovie}
-                    containerWidth="w-1/2"
-                  />
-                )}
-                numColumns={2}
-                columnWrapperStyle={{
-                  justifyContent: "flex-start",
-                  gap: 10,
-                  paddingRight: 5,
-                  marginBottom: 10,
-                }}
-                ItemSeparatorComponent={() => <View className="my-2" />}
-                keyExtractor={(item) => item.id.toFixed(1)}
-                scrollEnabled={false}
-                className="mt-6"
-              />
+              {/* Similar Movies */}
+              {similarMovies && similarMovies.length > 0 && (
+                <SimilarItems similarItems={similarMovies} />
+              )}
             </View>
           </ScrollView>
         </View>

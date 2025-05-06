@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
-import Card from "./Card";
+import { FlatList, Text, View } from "react-native";
+import Card from "./Card"; // Assuming this component exists
 
-interface Props {
-  data: any;
+interface SimilarMoviesProps {
+  similarItems: Movie[];
 }
 
-const SimilarMovies = ({ data }: Props) => {
+const SimilarItems: React.FC<SimilarMoviesProps> = ({ similarItems }) => {
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
-
   return (
     <>
       <Text className="text-action/80 text-xl">Similar Movies</Text>
       <FlatList
-        data={data}
+        data={similarItems.slice(0, 4)}
         renderItem={({ item }) => (
           <Card
             {...item}
@@ -40,4 +38,4 @@ const SimilarMovies = ({ data }: Props) => {
   );
 };
 
-export default SimilarMovies;
+export default SimilarItems;
