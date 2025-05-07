@@ -87,9 +87,11 @@ const TvShow = () => {
                 loop
                 autoPlay
                 width={screenWidth}
-                height={screenHeight / 1.7}
+                height={screenHeight / 1.3}
                 snapEnabled={true}
-                data={data}
+                data={data.filter(
+                  (item) => item.backdrop_path && item.poster_path
+                )}
                 autoPlayInterval={10000}
                 style={{ width: "100%" }}
                 renderItem={({ item }) => (
