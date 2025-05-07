@@ -16,7 +16,7 @@ import {
 import { useSharedValue } from "react-native-reanimated";
 import Carousel from "react-native-reanimated-carousel";
 
-export default function Index() {
+export default function Home() {
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
