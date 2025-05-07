@@ -11,7 +11,7 @@ interface GenresProps {
 const GenresList = ({ genresList, genre, setGenre }: GenresProps) => {
   return (
     <>
-      <Text className="text-zinc-400 text-lg">Genres</Text>
+      <Text className="text-lg text-action/80">Genres</Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
