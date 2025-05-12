@@ -1,7 +1,6 @@
-import { allGenres } from "@/constants/genres";
-import { icons } from "@/constants/icons";
+import { allGenres } from "@/constant/genres";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link } from "expo-router";
-import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 interface CardProps {
@@ -50,7 +49,7 @@ const Card = ({
 
           {/* Rating */}
           <View className="flex-row gap-x-1 my-2">
-            <Image source={icons.star} className="size-6" />
+            <FontAwesome name="star" color={"gold"} size={18} />
             <Text className="text-white text-lg font-bold">
               {Math.round(vote_average ?? 0)}/10
             </Text>

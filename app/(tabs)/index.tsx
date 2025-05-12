@@ -1,5 +1,5 @@
+import Banner from "@/components/Banner";
 import { default as Card } from "@/components/Card";
-import MovieBanner from "@/components/MovieBanner";
 import Upcoming from "@/components/Upcoming";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
@@ -58,7 +58,7 @@ export default function Home() {
 
   return (
     <>
-      {loading ? (
+      {!data ? (
         <ActivityIndicator
           size={"large"}
           color={"#FFC20B"}
@@ -93,7 +93,7 @@ export default function Home() {
                   }}
                   onProgressChange={progress}
                   renderItem={({ item }) => (
-                    <MovieBanner
+                    <Banner
                       key={item.id}
                       overview={item.overview}
                       poster_path={item.poster_path}
@@ -112,26 +112,9 @@ export default function Home() {
                 Upcoming Movies
               </Text>
 
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                className="mb-8 mt-3"
-                data={upcoming}
-                contentContainerStyle={{
-                  gap: 10,
-                }}
-                renderItem={({ item }) => (
-                  <Upcoming
-                    id={item.id}
-                    type="movie"
-                    title={item.title}
-                    poster={item.poster_path}
-                    backdrop_path={item.backdrop_path}
-                  />
-                )}
-                keyExtractor={(item) => item.id.toString()}
-                ItemSeparatorComponent={() => <View className="w-4" />}
-              />
+              {upcoming && upcoming?.length > 0 && (
+                <Upcoming data={upcoming} type="movie" />
+              )}
 
               {/* Top Rated Movies */}
               {error ? (
@@ -171,27 +154,11 @@ export default function Home() {
               <Text className="text-lg font-semibold text-action/80 mb-4">
                 Popular TV Shows
               </Text>
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                className="mb-8 mt-3"
-                data={popularTvShows}
-                contentContainerStyle={{
-                  gap: 10,
-                }}
-                renderItem={({ item }) => (
-                  <Upcoming
-                    id={item.id}
-                    type="tv"
-                    name={item.name}
-                    title={item.title}
-                    poster={item.poster_path}
-                    backdrop_path={item.backdrop_path}
-                  />
-                )}
-                keyExtractor={(item) => item.id.toString()}
-                ItemSeparatorComponent={() => <View className="w-4" />}
-              />
+
+              {popularTvShows && popularTvShows.length > 0 && (
+                <Upcoming data={popularTvShows} type="tvshows" />
+              )}
+
               {/* Top Rated TV Shows */}
               {error ? (
                 <Text className="text-white">{error?.message}</Text>

@@ -23,7 +23,7 @@ const Genre = ({ genres }: Genres) => {
             </Text>
           )}
           keyExtractor={(item) => item.id.toString()}
-          numColumns={3}
+          numColumns={4}
           columnWrapperStyle={{
             justifyContent: "flex-start",
             gap: 10,

@@ -2,12 +2,11 @@ import BackButton from "@/components/BackButton";
 import CastList from "@/components/CastList";
 import CoverImage from "@/components/CoverImage";
 import Genre from "@/components/Genre";
-import MovieInfo from "@/components/MovieInfo";
+import Info from "@/components/Info";
 import Production from "@/components/Production";
 import SimilarItems from "@/components/SimilarItems";
 import TrailerButton from "@/components/TrailerButton";
 import TrailerModal from "@/components/TrailerModal";
-import { icons } from "@/constants/icons";
 import {
   fetchCasts,
   fetchMovies,
@@ -15,12 +14,12 @@ import {
   fetchTvShowsDetails,
 } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import { default as FontAwesome } from "@expo/vector-icons/FontAwesome5";
+import FontAwesome4 from "@expo/vector-icons/FontAwesome";
+import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import { useLocalSearchParams } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
-  Image,
   RefreshControl,
   ScrollView,
   Text,
@@ -101,7 +100,7 @@ const TvShowsDetails = () => {
               {/* Rate Vote and Release date */}
               <View className="flex-row gap-x-3 my-5">
                 <View className="flex-row gap-x-3">
-                  <Image source={icons.star} />
+                  <FontAwesome4 name="star" color={"gold"} size={18} />
                   <Text className="text-white">
                     {Math.round(tvShows?.vote_average ?? 0)}/10
                   </Text>
@@ -130,7 +129,7 @@ const TvShowsDetails = () => {
               )}
 
               {/* Overview */}
-              <MovieInfo label="Overview" value={tvShows?.overview} />
+              <Info label="Overview" value={tvShows?.overview} />
 
               {/* Status, Seasons and Episodes */}
               <View className="flex-row gap-x-5 items-center justify-center mb-5">

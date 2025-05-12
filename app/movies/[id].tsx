@@ -2,12 +2,11 @@ import BackButton from "@/components/BackButton";
 import CastList from "@/components/CastList";
 import CoverImage from "@/components/CoverImage";
 import Genre from "@/components/Genre";
-import MovieInfo from "@/components/MovieInfo";
+import Info from "@/components/Info";
 import Production from "@/components/Production";
 import SimilarItems from "@/components/SimilarItems";
 import TrailerButton from "@/components/TrailerButton";
 import TrailerModal from "@/components/TrailerModal";
-import { icons } from "@/constants/icons";
 import {
   fetchCasts,
   fetchMovieDetails,
@@ -15,12 +14,12 @@ import {
   fetchTrailers,
 } from "@/services/api";
 import useFetch from "@/services/useFetch";
-import { default as FontAwesome } from "@expo/vector-icons/FontAwesome5";
+import FontAwesome4 from "@expo/vector-icons/FontAwesome";
+import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import { useLocalSearchParams } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
-  Image,
   RefreshControl,
   ScrollView,
   Text,
@@ -102,7 +101,7 @@ const MovieDetails = () => {
               {/*Rate,  Release date and Runtime */}
               <View className="flex-row items-center gap-x-5 my-5">
                 <View className="flex-row gap-x-3">
-                  <Image source={icons.star} />
+                  <FontAwesome4 name="star" color={"gold"} size={18} />
                   <Text className="text-white">
                     {Math.round(movie?.vote_average ?? 0)}/10
                   </Text>
@@ -134,20 +133,20 @@ const MovieDetails = () => {
               )}
 
               {/* Overview */}
-              <MovieInfo label="Overview" value={movie?.overview} />
+              <Info label="Overview" value={movie?.overview} />
 
               {/* Budget and Revenue */}
               <View className="flex flex-row gap-x-16">
                 {movie && (
                   <>
-                    <MovieInfo
+                    <Info
                       label="Budget"
                       value={`$${(
                         Math.round(movie?.budget) / 1_000_000
                       ).toFixed(1)} M`}
                     />
 
-                    <MovieInfo
+                    <Info
                       label="Revenue"
                       value={`$${(
                         Math.round(movie?.revenue) / 1_000_000

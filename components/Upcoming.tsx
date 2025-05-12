@@ -1,44 +1,49 @@
 import { Link } from "expo-router";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 
 interface Upcoming {
-  id: number | string;
+  data: Movie[];
   type: string;
-  name?: string;
-  title: string;
-  poster: string;
-  backdrop_path: string;
 }
 
-const Upcoming = ({
-  id,
-  type,
-  title,
-  name,
-  poster,
-  backdrop_path,
-}: Upcoming) => {
+const Upcoming = ({ data, type }: Upcoming) => {
   return (
-    <Link href={type === "movie" ? `/movies/${id}` : `/tvshows/${id}`} asChild>
-      <TouchableOpacity className="w-40 relative">
-        <Image
-          source={{
-            uri: poster
-              ? `https://image.tmdb.org/t/p/w500${poster}`
-              : `https://image.tmdb.org/t/p/w500${backdrop_path}`,
-          }}
-          className="w-44 h-60 rounded-lg"
-          resizeMode="cover"
-        />
+    <FlatList
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      className="mb-8 mt-3"
+      data={data}
+      contentContainerStyle={{
+        gap: 10,
+      }}
+      renderItem={({ item }) => (
+        <Link
+          href={type === "movie" ? `/movies/${item.id}` : `/tvshows/${item.id}`}
+          asChild
+        >
+          <TouchableOpacity className="w-40 relative">
+            <Image
+              source={{
+                uri: item.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                  : `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+              }}
+              className="w-44 h-60 rounded-lg"
+              resizeMode="cover"
+            />
 
-        {/* Title and Rate */}
-        <View>
-          <Text className="text-sm mt-2 text-light-200" numberOfLines={1}>
-            {title ? title : name}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </Link>
+            {/* Title and Rate */}
+            <View>
+              <Text className="text-sm mt-2 text-light-200" numberOfLines={1}>
+                {item.title ? item.title : item.name}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </Link>
+      )}
+      keyExtractor={(item) => item.id.toString()}
+      ItemSeparatorComponent={() => <View className="w-4" />}
+    />
   );
 };
 

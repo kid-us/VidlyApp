@@ -1,11 +1,11 @@
 import { Text, View } from "react-native";
 
-interface MovieInfoProps {
+interface InfoProps {
   label: string;
   value?: string | number | null;
 }
 
-const MovieInfo = ({ label, value }: MovieInfoProps) => {
+const Info = ({ label, value }: InfoProps) => {
   return (
     <View className="my-5">
       <Text className="text-zinc-300">{label}</Text>
@@ -14,4 +14,4 @@ const MovieInfo = ({ label, value }: MovieInfoProps) => {
   );
 };
 
-export default MovieInfo;
+export default Info;

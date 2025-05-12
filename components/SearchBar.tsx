@@ -14,7 +14,7 @@ const SearchBar = ({ onPress, placeholder, value, onChangeText }: Props) => {
       <FontAwesome5 name="search" color="#a8b5db" size={20} />
 
       <TextInput
-        onFocus={onPress} // Changed from onPress to onFocus
+        onFocus={onPress}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}

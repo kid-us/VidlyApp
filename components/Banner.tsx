@@ -9,7 +9,7 @@ interface BannerProps {
   name: string;
 }
 
-const MovieBanner = ({
+const Banner = ({
   overview,
   poster_path,
   title,
@@ -58,4 +58,4 @@ const MovieBanner = ({
   );
 };
 
-export default MovieBanner;
+export default Banner;

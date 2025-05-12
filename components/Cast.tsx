@@ -1,4 +1,3 @@
-import avatar from "@/assets/images/avatar.png";
 import { Image, Text, View } from "react-native";
 
 interface CastProps {
@@ -7,12 +6,14 @@ interface CastProps {
   name: string;
 }
 
-const MovieCast = ({ name, characterName, image }: CastProps) => {
+const Cast = ({ name, characterName, image }: CastProps) => {
   return (
     <View className="w-1/3">
       <Image
         source={
-          image ? { uri: `https://image.tmdb.org/t/p/w500/${image}` } : avatar
+          image
+            ? { uri: `https://image.tmdb.org/t/p/w500/${image}` }
+            : require("@/assets/images/avatar.png")
         }
         style={{ width: 80, height: 80, borderRadius: 40 }}
       />
@@ -22,4 +23,4 @@ const MovieCast = ({ name, characterName, image }: CastProps) => {
   );
 };
 
-export default MovieCast;
+export default Cast;

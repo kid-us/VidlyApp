@@ -1,4 +1,3 @@
-import logo from "@/assets/images/logo_new.png";
 import Card from "@/components/Card";
 import SearchBar from "@/components/SearchBar";
 import { fetchMovies } from "@/services/api";
@@ -32,8 +31,6 @@ const Search = () => {
 
   return (
     <View className="flex-1 bg-primary">
-      {/* <Image source={images.bg} className="absolute w-full z-0" /> */}
-
       <FlatList
         data={movies}
         renderItem={({ item }) => (
@@ -57,7 +54,7 @@ const Search = () => {
           <>
             <View className="flex-row w-full justify-center items-center mt-20">
               <Image
-                source={logo}
+                source={require("@/assets/images/long_logo.png")}
                 className="w-full h-12"
                 resizeMode="contain"
               />
@@ -91,7 +88,7 @@ const Search = () => {
               searchQuery.trim() &&
               movies?.length > 0 && (
                 <Text className="text-xl text-white mb-5">
-                  Search Result for :{" "}
+                  Search Result for :
                   <Text className="text-action/80 font-semibold">
                     {searchQuery}
                   </Text>

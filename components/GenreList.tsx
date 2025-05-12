@@ -1,4 +1,4 @@
-import { Genres } from "@/constants/genres";
+import { Genres } from "@/constant/genres";
 import React from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
@@ -10,8 +10,8 @@ interface GenresProps {
 
 const GenresList = ({ genresList, genre, setGenre }: GenresProps) => {
   return (
-    <>
-      <Text className="text-lg text-action/80">Genres</Text>
+    <View className="mt-10">
+      <Text className="text-xl text-white ">Genres</Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -40,7 +40,7 @@ const GenresList = ({ genresList, genre, setGenre }: GenresProps) => {
         keyExtractor={(item) => item.name.toString()}
         ItemSeparatorComponent={() => <View className="w-2" />}
       />
-    </>
+    </View>
   );
 };
 

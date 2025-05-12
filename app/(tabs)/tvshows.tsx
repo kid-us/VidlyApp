@@ -1,23 +1,18 @@
 import Card from "@/components/Card";
-import GenresList from "@/components/GenresList";
-import MovieBanner from "@/components/MovieBanner";
-import { allGenres, tvGenres } from "@/constants/genres";
+import GenresList from "@/components/GenreList";
+import { allGenres, tvGenres } from "@/constant/genres";
 import { fetchMovies } from "@/services/api";
-import useFetch from "@/services/useFetch";
 import { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Dimensions,
   FlatList,
   RefreshControl,
   ScrollView,
   Text,
   View,
 } from "react-native";
-import Carousel from "react-native-reanimated-carousel";
 
-const TvShow = () => {
-  const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const TvShows = () => {
   const [longPressedMovie, setLongPressedMovie] = useState<number | null>(null);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -29,11 +24,6 @@ const TvShow = () => {
       setRefreshing(false);
     }, 3000);
   }, []);
-
-  // Banner
-  const { data, loading: bannerLoading } = useFetch(() =>
-    fetchMovies({ request: "/tv/popular" })
-  );
 
   const [genre, setGenre] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -67,7 +57,7 @@ const TvShow = () => {
 
   return (
     <>
-      {bannerLoading ? (
+      {loading ? (
         <ActivityIndicator
           size={"large"}
           color={"#FFC20B"}
@@ -82,31 +72,6 @@ const TvShow = () => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
           >
-            {data && (
-              <Carousel
-                loop
-                autoPlay
-                width={screenWidth}
-                height={screenHeight / 1.3}
-                snapEnabled={true}
-                data={data.filter(
-                  (item) => item.backdrop_path && item.poster_path
-                )}
-                autoPlayInterval={10000}
-                style={{ width: "100%" }}
-                renderItem={({ item }) => (
-                  <MovieBanner
-                    key={item.id}
-                    overview={item.overview}
-                    poster_path={item.poster_path}
-                    title={item.title}
-                    backdrop_path={item.backdrop_path}
-                    name={item.name}
-                  />
-                )}
-              />
-            )}
-
             {/* TvShows */}
             {genre && loading ? (
               <ActivityIndicator
@@ -158,4 +123,4 @@ const TvShow = () => {
   );
 };
 
-export default TvShow;
+export default TvShows;
